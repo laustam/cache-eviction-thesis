@@ -7,3 +7,6 @@ main.fls
 main.log
 main.pdf
 main.synctex.gz
+# (bibliography related)
+main.bbl
+main.blg
