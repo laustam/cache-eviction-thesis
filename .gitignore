@@ -10,3 +10,5 @@ main.synctex.gz
 # (bibliography related)
 main.bbl
 main.blg
+# (table of contents)
+main.toc
