@@ -1,5 +1,10 @@
-\documentclass[11pt]{article}
+\documentclass[a4paper, 11pt]{report}
 \usepackage{graphicx}
+\usepackage{lipsum}
+\usepackage{fancyhdr}
+
+\renewcommand{\chaptername}{} % remove "chapter" from chapter headings
+
 \textwidth 15cm
 \textheight 22cm
 \parindent 10pt
@@ -17,8 +22,10 @@
 {\Large Bachelor Thesis}
 \vspace{1cm}
 
-\rule{.9\linewidth}{.6pt}\\[0.4cm]
+\rule{.9\linewidth}{.6pt}\\
+\vspace{0.4cm}
 {\huge \bfseries Comparative Study of Cache \\ Eviction Algorithms\par}
+\vspace{0.4cm}
 \rule{.9\linewidth}{.6pt}\\[1.5cm]
 \vspace*{2mm}
 {\Large
@@ -44,5 +51,17 @@ of Science degree in Computer Science }
 \today % Date
 \end{center}
 
-\newpage
+\pagestyle{fancy}
+%... then configure it.
+\fancyhead{} % clear all header fields
+% \fancyhead[R]{meow \chaptername}
+\fancyhead[R]{ \leftmark}
+
+\newpage\input{sections/abstract.tex}
+\newpage\input{sections/introduction.tex}
+\newpage\input{sections/background.tex}
+\newpage\input{sections/design.tex}
+\newpage\input{sections/conclusion.tex}
+% \input{sections/references.tex}
+
 \end{document}
