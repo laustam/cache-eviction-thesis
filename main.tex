@@ -1,7 +1,9 @@
 \documentclass[a4paper, 11pt]{report}
 \usepackage{graphicx}
 \usepackage{lipsum}
-\usepackage{fancyhdr}
+\usepackage{fancyhdr} % used for header customization
+\usepackage{todonotes}
+\input{resources/commands.tex} % import custom commands
 
 \renewcommand{\chaptername}{} % remove "chapter" from chapter headings
 
@@ -61,7 +63,8 @@ of Science degree in Computer Science }
 \newpage\input{sections/introduction.tex}
 \newpage\input{sections/background.tex}
 \newpage\input{sections/design.tex}
+\newpage\input{sections/evaluation.tex}
 \newpage\input{sections/conclusion.tex}
-% \input{sections/references.tex}
+\input{sections/references.tex}
 
 \end{document}
