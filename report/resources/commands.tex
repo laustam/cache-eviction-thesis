@@ -2,4 +2,8 @@
 
 \newcommand{\reminder}[1]{\todo[inline, color=orange!30]{#1}}
 
-\newcommand{\outline}[1]{{\color{blue}#1}}
+\newcommand{\outline}[1]{%
+  \ifthenelse{\boolean{showoutline}}%
+    {\textcolor{blue}{#1}}%
+    {}%
+}

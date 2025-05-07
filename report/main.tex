@@ -4,6 +4,7 @@
 \usepackage{lipsum}
 \usepackage{fancyhdr} % used for header customization
 \usepackage{todonotes}
+\usepackage{ifthen} % used to toggle commands on or off
 \input{resources/commands.tex} % import custom commands
 
 \renewcommand{\chaptername}{} % remove "chapter" from chapter headings
@@ -13,6 +14,11 @@
 \parindent 10pt
 \oddsidemargin 0.85cm
 \evensidemargin 0.37cm
+
+% Show outline --------------
+\newboolean{showoutline}
+\setboolean{showoutline}{true}  % Change to false to hide
+% ---------------------------
 
 \begin{document}
 \thispagestyle{empty}
@@ -62,6 +68,15 @@ of Science degree in Computer Science }
 
 \newpage\input{sections/abstract.tex}
 \tableofcontents
+
+% Testing citations ----------------------
+Sieve citation\cite{sieve}
+
+Web caching overview citation\cite{web-cache-overview}
+
+S3-FIFO citation\cite{s3-fifo}
+% ----------------------------------------
+
 \newpage\input{sections/introduction.tex}
 \newpage\input{sections/background.tex}
 \newpage\input{sections/design.tex}
