@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmrcProfilerLib.a CMakeFiles/mrcProfilerLib.dir/mrcProfiler.cpp.o
+/usr/bin/ranlib libmrcProfilerLib.a

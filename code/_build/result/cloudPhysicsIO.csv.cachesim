@@ -1,0 +1,6 @@
+../data/cloudPhysicsIO.csv LRU cache size   100MiB,           113872 req, miss ratio 0.0000, throughput 2.36 MQPS
+../data/cloudPhysicsIO.csv LRU cache size     1GiB,           113872 req, miss ratio 0.0000, throughput 2.31 MQPS
+../data/cloudPhysicsIO.csv LRU cache size     1024KiB, 113872 req, miss ratio 0.0000, byte miss ratio 0.0000
+../data/cloudPhysicsIO.csv LRU cache size    16384KiB, 113872 req, miss ratio 0.0000, byte miss ratio 0.0000
+../data/cloudPhysicsIO.csv LRU cache size   262144KiB, 113872 req, miss ratio 0.0000, byte miss ratio 0.0000
+../data/cloudPhysicsIO.csv LRU cache size  8388608KiB, 113872 req, miss ratio 0.0000, byte miss ratio 0.0000

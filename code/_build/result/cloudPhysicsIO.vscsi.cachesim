@@ -1,0 +1,4 @@
+../data/cloudPhysicsIO.vscsi LRU cache size     1024KiB, 113872 req, miss ratio 0.8646, byte miss ratio 0.9813
+../data/cloudPhysicsIO.vscsi LRU cache size    16384KiB, 113872 req, miss ratio 0.8346, byte miss ratio 0.9763
+../data/cloudPhysicsIO.vscsi LRU cache size   262144KiB, 113872 req, miss ratio 0.7710, byte miss ratio 0.9133
+../data/cloudPhysicsIO.vscsi LRU cache size  8388608KiB, 113872 req, miss ratio 0.4301, byte miss ratio 0.4826

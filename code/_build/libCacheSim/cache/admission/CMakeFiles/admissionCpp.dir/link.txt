@@ -1,0 +1,2 @@
+/usr/bin/ar qc libadmissionCpp.a CMakeFiles/admissionCpp.dir/adaptsize/adaptsize.cpp.o CMakeFiles/admissionCpp.dir/adaptsize/adaptsize_interface.cpp.o
+/usr/bin/ranlib libadmissionCpp.a
