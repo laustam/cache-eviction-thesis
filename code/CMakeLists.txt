@@ -24,7 +24,6 @@ set(EXPORT_COMPILE_COMMANDS ON)
 # #######################################
 # echo madvise | sudo tee /sys/kernel/mm/transparent_hugepage/enabled
 option(USE_HUGEPAGE "use transparent hugepage" ON)
-option(ENABLE_TESTS "whether enable test" ON)
 option(ENABLE_GLCACHE "enable group-learned cache" OFF)
 option(SUPPORT_TTL "whether support TTL" OFF)
 option(OPT_SUPPORT_ZSTD_TRACE "whether support zstd trace" ON)
@@ -375,13 +374,3 @@ install(FILES ${CMAKE_BINARY_DIR}/Find${PROJECT_NAME}.cmake DESTINATION ${CMAKE_
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
-# ############################
-if(ENABLE_TESTS)
-    include(CTest)
-    enable_testing()
-    message(STATUS "Building with test")
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/test)
-else()
-    message(STATUS "Building without test")
-endif()
