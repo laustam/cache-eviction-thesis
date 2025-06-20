@@ -16,6 +16,11 @@
 extern "C" {
 #endif
 
+// ############### my stuff !!!!!!!!!!!!!!
+typedef struct {
+    bool visited; // set to true if an item is already in the cache and trying to add it again
+} __attribute__((packed)) mySieve_obj_params_t;
+
 // ############## per object metadata used in eviction algorithm cache obj
 typedef struct {
   int64_t freq;
@@ -189,6 +194,7 @@ typedef struct cache_obj {
     S3FIFO_obj_metadata_t S3FIFO;
     Sieve_obj_params_t sieve;
     CAR_obj_metadata_t CAR;
+    mySieve_obj_params_t mySieve;
 
 #if defined(ENABLE_GLCACHE) && ENABLE_GLCACHE == 1
     GLCache_obj_metadata_t GLCache;
