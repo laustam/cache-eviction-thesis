@@ -10,27 +10,18 @@ cache_t *mySieve_init(const common_cache_params_t ccache_params, const char *cac
 
     cache_t *cache = cache_struct_init("mySieve", ccache_params, cache_specific_params);
     cache->cache_init = mySieve_init;
-    cache->cache_free = mySieve_free;
-    cache->get = mySieve_get;
+    cache->cache_free = myCache_free;
+    cache->get = myCache_get;
     cache->find = mySieve_find;
     cache->insert = mySieve_insert;
     cache->evict = mySieve_evict;
     cache->remove = mySieve_remove;
     cache->to_evict = mySieve_to_evict;
     cache->eviction_params = params;
-    cache->obj_md_size = ccache_params.consider_obj_metadata; // bool flag needed to control if metadata is present
+    cache->obj_md_size = ccache_params.consider_obj_metadata; // TODO: is this correct? shouldn't this be sizeof mySieve_params_t?
 
     return cache;
 }
-
-/* free the resources used by the cache */
-void mySieve_free(cache_t *cache) {
-    free(cache->eviction_params);
-    cache_struct_free(cache);
-}
-
-/* get the object from the cache, it is find + on-demand insert/evict, return true if cache hit */
-bool mySieve_get(cache_t *cache, const request_t *req) { return cache_get_base(cache, req); }
 
 /* find an object in the cache, return the cache object if found, NULL otherwise, update_cache means whether update the
  * cache state, e.g., moving object to the head of the queue */

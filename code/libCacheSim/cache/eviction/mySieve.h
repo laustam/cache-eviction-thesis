@@ -6,6 +6,7 @@
 #include "../../include/libCacheSim/cache.h"
 #include "../../include/libCacheSim/cacheObj.h"
 #include "../../dataStructure/hashtable/hashtable.h"
+#include "myHelpers.h"
 
 typedef struct {
     cache_obj_t *hand; // points to the current object, moves from tail towards head
@@ -15,12 +16,6 @@ typedef struct {
 
 /* initialize all the variables */
 cache_t *mySieve_init(const common_cache_params_t ccache_params, const char *cache_specific_params);
-
-/* free the resources used by the cache */
-void mySieve_free(cache_t *cache);
-
-/* get the object from the cache, it is find + on-demand insert/evict, return true if cache hit */
-bool mySieve_get(cache_t *cache, const request_t *req);
 
 /* find an object in the cache, return the cache object if found, NULL otherwise, update_cache means whether update the cache state, e.g., moving object to the head of the queue */
 cache_obj_t *mySieve_find(cache_t *cache, const request_t *req, const bool update_cache);
