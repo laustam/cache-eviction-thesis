@@ -4,7 +4,6 @@
 #include <stdbool.h>
 
 #include "../../include/libCacheSim/cache.h"
-#include "../../include/libCacheSim/cacheObj.h"
 #include "../../dataStructure/hashtable/hashtable.h"
 #include "myHelpers.h"
 
