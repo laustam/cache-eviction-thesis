@@ -12,3 +12,6 @@ main.bbl
 main.blg
 # (table of contents)
 main.toc
+
+# vscode config file
+.vscode
