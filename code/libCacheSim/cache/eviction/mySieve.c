@@ -43,10 +43,7 @@ cache_obj_t *mySieve_find(cache_t *cache, const request_t *req, const bool updat
 /* insert an object to the cache, return the cache object, this assumes the object is not in the cache */
 cache_obj_t *mySieve_insert(cache_t *cache, const request_t *req) {
     mySieve_params_t *params = cache->eviction_params;
-    cache_obj_t *cache_obj = cache_insert_base(cache, req);       // insert obj (assuming it doesnt exist yet)
-    prepend_obj_to_head(&params->head, &params->tail, cache_obj); // add the new obj to the head of the queue
-    cache_obj->mySieve.visited = false;
-    return cache_obj;
+    return myCache_insert_head(cache, req, &params->head, &params->tail);
 }
 
 /* find the object to be evicted, return the cache object, not used very often */
