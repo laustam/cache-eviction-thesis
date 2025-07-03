@@ -1,6 +1,7 @@
 set(sourceC
         mySieve.c
         myLRU.c
+        myFIFO.c
         MRU.c
         Random.c
         RandomTwo.c
