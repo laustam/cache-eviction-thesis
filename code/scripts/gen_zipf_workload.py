@@ -10,7 +10,7 @@ WORKLOAD_FILE_SAVE_PATH = "../data/synthetic_data"
 
 def get_zipf_workload(num_unique: int, num_requests: int, alpha: int, debug: bool) -> list[int]:
     print(
-        f"Number unique: {num_unique}, Number of requests: {num_requests}, Alpha: {alpha}")
+        f"\nGenerating Zipfian workload\nAlpha: {alpha}, Number unique: {num_unique}, Number of requests: {num_requests}")
 
     harmonic_sum: list[float] = sum(
         # normalise values so sum = 1
@@ -58,16 +58,16 @@ def file_save_workload(workload: list[int], filename: str):
 def main() -> None:
     parser = argparse.ArgumentParser(prog="Zipfian workload generator",
                                      description="This script generates Zipfian workloads")
-    parser.add_argument('num_requests', type=int,
+    parser.add_argument('--num_requests', type=int, required=True,
                         help='Number of requests to generate')
     unique_values = parser.add_mutually_exclusive_group(required=False)
-    unique_values.add_argument('--num-unique', type=int,
+    unique_values.add_argument('--num_unique', type=int,
                                help='Number of unique items (must be less than num-requsts)')
-    unique_values.add_argument('--percent-unique', type=float,
+    unique_values.add_argument('--percent_unique', type=float,
                                help="Percent of unique items given as a decimal (0-1)")
     parser.add_argument('--alpha', type=float, required=True,
                         help='Zipfian exponent, representing the skewness of the workload')
-    parser.add_argument('--output', type=str, help='Output file name')
+    parser.add_argument('--output_name', type=str, help='Output file name')
     parser.add_argument('-d', '--debug', action='store_true',
                         help='Debug flag')
     args = parser.parse_args()
@@ -77,7 +77,7 @@ def main() -> None:
     workload = get_zipf_workload(
         num_unique, args.num_requests, args.alpha, args.debug)
 
-    filename = args.output if args.output else f"unique {num_unique}, requests {args.num_requests}, alpha {args.alpha}.txt"
+    filename = args.output_name if args.output_name else f"alpha_{args.alpha}_unique_{num_unique}_requests_{args.num_requests}.txt"
     file_save_workload(workload, filename)
 
 
