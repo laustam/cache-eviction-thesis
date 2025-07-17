@@ -14,36 +14,6 @@ set(sourceCPP
         LHD/LHD_Interface.cpp
         )
 
-if (ENABLE_LRB)
-    set (sourceCPP ${sourceCPP} 
-        LRB/lrb.cpp
-        LRB/LRB_Interface.cpp
-        )
-endif()
-
-if (ENABLE_3L_CACHE)
-    set (sourceCPP ${sourceCPP} 
-        3LCache/ThreeLCache_Interface.cpp
-        3LCache/ThreeLCache.cpp
-        )
-endif()
-
-if (ENABLE_GLCACHE)
-    set(sourceC 
-        ${sourceC} 
-        GLCache/bucket.c
-        GLCache/dataPrep.c
-        GLCache/eviction.c
-        GLCache/GLCache.c
-        GLCache/inference.c
-        GLCache/init.c
-        GLCache/segment.c
-        GLCache/segSel.c
-        GLCache/train.c
-        )
-endif()
-
-
 add_library (evictionC ${sourceC})
 target_link_libraries(evictionC cachelib dataStructure utils)
 add_library (evictionCPP ${sourceCPP})
