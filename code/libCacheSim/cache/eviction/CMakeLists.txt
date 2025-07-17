@@ -24,14 +24,3 @@ set_target_properties(evictionCPP
         CXX_STANDARD_REQUIRED YES
         CXX_EXTENSIONS NO
         )
-
-# set (evictionLib
-#         evictionC
-#         evictionCPP
-#         )
-
-
-        
-# add_library(eviction INTERFACE)
-# target_link_libraries(eviction INTERFACE ${evictionLib})
-
