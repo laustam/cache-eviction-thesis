@@ -14,7 +14,7 @@ Notable files and directories are outlined here:
 |   ├── data/                       # Workloads used in the experiment are stored here
 |   |    
 |   ├── scripts/
-|   |   ├── gen_zipf_worklaod.py    # Script to generate a workload following a Zipf-like distribution. Result is stored in code/data
+|   |   ├── gen_zipf_workload.py    # Script to generate a workload following a Zipf-like distribution. Result is stored in code/data
 |   |   └── ...
 |   ├── libCacheSim/
 |   |   ├── bin/
