@@ -2,51 +2,9 @@ set(sourceC
         mySieve.c
         myLRU.c
         myFIFO.c
-        MRU.c
-        Random.c
-        RandomTwo.c
-        LFU.c
-        LFUDA.c
-        ARC.c
         FIFO.c
         LRU.c
-        Clock.c
-        ClockPro.c
-        SLRU.c
-        SLRUv0.c
-        CR_LFU.c
-        SR_LRU.c
-        Belady.c
-        BeladySize.c
-        Hyperbolic.c
-        LeCaR.c
-        Cacheus.c
-        TwoQ.c
-        ARCv0.c
-        LRUv0.c
-        LeCaRv0.c
-        LIRS.c
-        WTinyLFU.c
-        Size.c
-        LRUProb.c
-        QDLP.c
-        nop.c
-
-        FIFO_Merge.c
-        FIFO_Reinsertion.c
-
-        S3FIFO.c
-        S3FIFOv0.c
-        S3FIFOd.c
-
-        other/flashProb.c
-        other/S3LRU.c
-
         Sieve.c
-
-        CAR.c
-
-        RandomLRU.c
 )
 
 if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/priv")
