@@ -12,7 +12,7 @@ def main() -> None:
                 "python3",
                 "gen_zipf_workload.py",
                 "--alpha", str(alpha),
-                "--num_unique", str(nr_unique).replace(',', ''),
+                "--num_objects", str(nr_unique).replace(',', ''),
                 "--num_requests", str(nr_requests).replace(',', '')
             ])
 

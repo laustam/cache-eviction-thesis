@@ -60,10 +60,10 @@ def main() -> None:
                                      description="This script generates Zipfian workloads")
     parser.add_argument('--num_requests', type=int, required=True,
                         help='Number of requests to generate')
-    unique_values = parser.add_mutually_exclusive_group(required=False)
-    unique_values.add_argument('--num_unique', type=int,
-                               help='Number of unique items (must be less than num-requsts)')
-    unique_values.add_argument('--percent_unique', type=float,
+    nr_objects = parser.add_mutually_exclusive_group(required=False)
+    nr_objects.add_argument('--num_objects', type=int,
+                               help='Number of unique objects (must be less than num_requsts)')
+    nr_objects.add_argument('--percent_unique', type=float,
                                help="Percent of unique items given as a decimal (0-1)")
     parser.add_argument('--alpha', type=float, required=True,
                         help='Zipfian exponent, representing the skewness of the workload')
@@ -72,12 +72,12 @@ def main() -> None:
                         help='Debug flag')
     args = parser.parse_args()
 
-    num_unique = args.num_unique if not args.percent_unique else int(
+    nr_objects = args.num_objects if not args.percent_unique else int(
         args.percent_unique * args.num_requests)
     workload = get_zipf_workload(
-        num_unique, args.num_requests, args.alpha, args.debug)
+        nr_objects, args.num_requests, args.alpha, args.debug)
 
-    filename = args.output_name if args.output_name else f"alpha_{args.alpha}_unique_{num_unique}_requests_{args.num_requests}.txt"
+    filename = args.output_name if args.output_name else f"alpha_{args.alpha}_objects_{nr_objects}_requests_{args.num_requests}.txt"
     file_save_workload(workload, filename)
 
 
