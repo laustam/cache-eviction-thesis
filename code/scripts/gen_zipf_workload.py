@@ -10,7 +10,7 @@ WORKLOAD_FILE_SAVE_PATH = "../data/synthetic_data"
 
 def get_zipf_workload(num_unique: int, num_requests: int, alpha: int, debug: bool) -> list[int]:
     print(
-        f"\nGenerating Zipfian workload\nAlpha: {alpha}, Number unique: {num_unique}, Number of requests: {num_requests}")
+        f"\nGenerating Zipfian workload\nAlpha: {alpha}, Percent unique: {num_unique/num_requests}, Number of objects: {num_unique}, Number of requests: {num_requests}")
 
     harmonic_sum: list[float] = sum(
         # normalise values so sum = 1
