@@ -5,7 +5,7 @@ from collections import Counter
 import os
 import matplotlib.pyplot as plt
 
-WORKLOAD_FILE_SAVE_PATH = "../data/synthetic_data"
+WORKLOAD_FILE_SAVE_PATH = "../data"
 
 
 def get_zipf_workload(num_unique: int, num_requests: int, alpha: int, debug: bool) -> list[int]:

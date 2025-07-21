@@ -2,7 +2,7 @@ import os
 import subprocess
 
 def main() -> None:
-    data_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'synthetic_data')
+    data_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
     bin_path = os.path.join(os.path.dirname(__file__), '..', '_build', 'bin', 'cachesim')
 
     for filename in os.listdir(data_dir):
