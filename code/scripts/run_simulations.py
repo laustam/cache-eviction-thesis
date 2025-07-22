@@ -1,18 +1,44 @@
 import os
 import subprocess
+import time
 
 def main() -> None:
-    data_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
-    bin_path = os.path.join(os.path.dirname(__file__), '..', '_build', 'bin', 'cachesim')
+    """
+    # DIRECTORY SETUP:
 
-    for filename in os.listdir(data_dir):
-        file_path = os.path.join(data_dir, filename)
+    ├── code                        # PARENT_DIR
+    |   ├── bin/
+    |   |   ├── bin/
+    |   |   |   ├── cachesim        # CACHESIM_PATH
+    |   |   |   └── ...
+    |   ├── data/                   # DATA_DIR
+    |   ├── scripts/                # SCRIPTS_DIR
+    |   ├── results/                # RESULTS DIR
+    |   └── ...
+    └── ...
+    """
+
+    SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
+    PARENT_DIR = os.path.dirname(SCRIPTS_DIR)
+    DATA_DIR = os.path.join(PARENT_DIR, 'data')
+    CACHESIM_PATH = os.path.join(PARENT_DIR, '_build', 'bin', 'cachesim')
+    RESULTS_DIR = os.path.join(PARENT_DIR, 'results')
+
+    # Ensure results dir actually exists since cachesim does not create a new directory!
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+
+    sorted_data_files = sorted(os.listdir(DATA_DIR))
+    start_time = time.time()
+
+    for i, filename in enumerate(sorted_data_files):
+        elapsed = int(time.time() - start_time)
+        hours, remainder = divmod(elapsed, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        print(f"[{i+1}/{len(sorted_data_files)}], Time elapsed: {hours:02}:{minutes:02}:{seconds:02}")
+        file_path = os.path.join(DATA_DIR, filename)
         if os.path.isfile(file_path):
-            # Ensure results dir actually exists since cachesim does not create a new directory!
-            results_dir = os.path.join(os.path.dirname(__file__), '..', 'results')
-            os.makedirs(results_dir, exist_ok=True)
-
-            cmd = [bin_path, file_path, 'txt', 'my_sieve,my_lru,my_fifo', 'auto', f'--output=../results/{filename[:-4]}_results.txt']
-            subprocess.run(cmd)
+            base_filename = os.path.splitext(filename)[0]
+            cmd = [CACHESIM_PATH, file_path, 'txt', 'my_sieve,my_lru,my_fifo', 'auto', f'--output={RESULTS_DIR}/{base_filename}_results.txt']
+            subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 if __name__ == "__main__":
     main()
