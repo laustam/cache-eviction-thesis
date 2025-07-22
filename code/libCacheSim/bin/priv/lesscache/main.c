@@ -134,8 +134,6 @@ int main(int argc, char **argv) {
 
   if (strcasecmp(eviction_algo, "lru") == 0) {
     cache = LRU_init(cc_params, NULL);
-  } else if (strcasecmp(eviction_algo, "lhd") == 0) {
-    cache = LHD_init(cc_params, NULL);
   } else if (strcasecmp(eviction_algo, "fifo") == 0) {
     cache = FIFO_init(cc_params, NULL);
   } else {

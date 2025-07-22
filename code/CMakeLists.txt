@@ -247,7 +247,6 @@ file(GLOB cache_source
     ${PROJECT_SOURCE_DIR}/libCacheSim/cache/admission/*.c
     ${PROJECT_SOURCE_DIR}/libCacheSim/cache/prefetch/*.c
 
-    ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/LHD/*
     ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/cpp/*
 )
 
