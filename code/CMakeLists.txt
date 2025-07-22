@@ -175,19 +175,6 @@ endif()
 
 find_package(Threads)
 
-# find_package(Boost REQUIRED)
-# message(STATUS "boost found? " ${Boost_FOUND} ", library " ${Boost_LIBRARIES} ", header " ${Boost_INCLUDE_DIRS})
-# include_directories(${Boost_INCLUDE_DIRS})
-if(ENABLE_GLCACHE)
-    find_package(xgboost REQUIRED)
-    include_directories(${XGBOOST_INCLUDE_DIR})
-    link_libraries(xgboost::xgboost)
-    add_compile_definitions(ENABLE_GLCACHE=1)
-    message(STATUS "XGBOOST_INCLUDE_DIR=${XGBOOST_INCLUDE_DIR}")
-else()
-    remove_definitions(ENABLE_GLCACHE)
-endif()
-
 foreach (FEATURE ENABLE_LRB ENABLE_3L_CACHE)
     if (${FEATURE})
         find_path(LIGHTGBM_PATH LightGBM)
@@ -206,7 +193,6 @@ foreach (FEATURE ENABLE_LRB ENABLE_3L_CACHE)
         remove_definitions(${FEATURE})
     endif()
 endforeach()
-# link_libraries("-ldl -lm ${LIBS}")
 
 # put binary in bin directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -273,46 +259,6 @@ if(EXISTS ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/fifo)
     )
 endif()
 
-if(EXISTS ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/belady)
-    file(GLOB belady_source
-        ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/belady/*.c)
-    set(cache_source
-        ${cache_source} ${belady_source}
-    )
-endif()
-
-if(EXISTS ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/priv)
-    file(GLOB priv_source
-        ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/priv/*.c)
-    set(cache_source
-        ${cache_source} ${priv_source}
-    )
-endif()
-
-if(ENABLE_GLCACHE)
-    file(GLOB GLCache_source
-        ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/GLCache/*.c)
-    set(cache_source
-        ${cache_source} ${GLCache_source}
-    )
-endif(ENABLE_GLCACHE)
-
-if(ENABLE_LRB)
-    file(GLOB LRB_source
-        ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/LRB/*.cpp)
-    set(cache_source
-        ${cache_source} ${LRB_source}
-    )
-endif(ENABLE_LRB)
-
-if(ENABLE_3L_CACHE)
-    file(GLOB ThreeLCache_source
-        ${PROJECT_SOURCE_DIR}/libCacheSim/cache/eviction/3LCache/*.cpp)
-    set(cache_source
-        ${cache_source} ${ThreeLCache_source}
-    )
-endif(ENABLE_3L_CACHE)
-
 set(reader_source
     ${PROJECT_SOURCE_DIR}/libCacheSim/traceReader/reader.c
     ${PROJECT_SOURCE_DIR}/libCacheSim/traceReader/generalReader/binary.c
@@ -349,15 +295,12 @@ set(LIB_SOURCE ${LIB_SOURCE} ${cache_source} ${reader_source} ${dataStructure_so
 SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 add_library(${PROJECT_NAME} ${LIB_SOURCE})
-# target_compile_options(${PROJECT_NAME} PRIVATE -fPIC)
 
 # Skip unsupported linker option for macOS (export-dynamic)
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     target_link_options(${PROJECT_NAME} PRIVATE -Wl,--export-dynamic)
 endif()
 
-
-# add_library(${PROJECT_NAME} SHARED ${LIB_SOURCE})
 set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${${PROJECT_NAME}_VERSION})
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE C)
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER ${PROJECT_SOURCE_DIR}/libCacheSim/include/libCacheSim.h)
@@ -365,8 +308,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER ${PROJECT_SOURCE_
 configure_file(${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.pc.in ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc @ONLY)
 configure_file(${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/Find${PROJECT_NAME}.cmake @ONLY)
 
-# this overwrites the default config.h
-# configure_file(${PROJECT_SOURCE_DIR}/libCacheSim/include/config.h.in ${PROJECT_SOURCE_DIR}/libCacheSim/include/config.h @ONLY)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/libCacheSim/include/ DESTINATION include)
 install(FILES ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.pc DESTINATION lib/pkgconfig)
 install(FILES ${CMAKE_BINARY_DIR}/Find${PROJECT_NAME}.cmake DESTINATION ${CMAKE_ROOT}/Modules/ COMPONENT dev)
