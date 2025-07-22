@@ -1,0 +1,12 @@
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt mySieve cache size      195B, 100000 req, miss ratio 0.1547, byte miss ratio 0.1547
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt mySieve cache size      390B, 100000 req, miss ratio 0.1105, byte miss ratio 0.1105
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt mySieve cache size      781B, 100000 req, miss ratio 0.0656, byte miss ratio 0.0656
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt mySieve cache size     1563B, 100000 req, miss ratio 0.0271, byte miss ratio 0.0271
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myLRU cache size      195B, 100000 req, miss ratio 0.2047, byte miss ratio 0.2047
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myLRU cache size      390B, 100000 req, miss ratio 0.1363, byte miss ratio 0.1363
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myLRU cache size      781B, 100000 req, miss ratio 0.0761, byte miss ratio 0.0761
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myLRU cache size     1563B, 100000 req, miss ratio 0.0275, byte miss ratio 0.0275
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myFIFO cache size      195B, 100000 req, miss ratio 0.2477, byte miss ratio 0.2477
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myFIFO cache size      390B, 100000 req, miss ratio 0.1701, byte miss ratio 0.1701
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myFIFO cache size      781B, 100000 req, miss ratio 0.0972, byte miss ratio 0.0972
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.2_objects_2000_requests_100000(15).txt myFIFO cache size     1563B, 100000 req, miss ratio 0.0338, byte miss ratio 0.0338
