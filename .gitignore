@@ -15,3 +15,5 @@ main.toc
 
 # vscode config file
 .vscode
+
+__pycache__
