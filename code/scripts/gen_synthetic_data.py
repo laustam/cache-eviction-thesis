@@ -2,19 +2,19 @@ import subprocess
 import time
 import os
 import re
+from dir_paths import DATA_DIR
 
 
 def restore_progress() -> dict[str, str]:
-    data_dir = os.path.join(os.path.dirname(__file__), "../data")
-    files = [os.path.join(data_dir, f) for f in os.listdir(
-        data_dir) if os.path.isfile(os.path.join(data_dir, f))]
+    files = [os.path.join(DATA_DIR, f) for f in os.listdir(
+        DATA_DIR) if os.path.isfile(os.path.join(DATA_DIR, f))]
 
     if not files:
-        print("No files found in ../data. No progress is restored.")
+        print("No files found. No progress is restored.")
         return {}
 
     most_recent_file = max(files, key=os.path.getmtime)
-    print(f"Most recent file in ../data: {os.path.basename(most_recent_file)}")
+    print(f"Most recent file: {os.path.basename(most_recent_file)}")
 
     regex = r"alpha_(\d+\.?\d*)_objects_(\d+)_requests_(\d+)(?:\((\d+)\))?\.txt"
     match = re.search(regex, most_recent_file)

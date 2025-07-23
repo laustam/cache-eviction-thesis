@@ -1,12 +1,8 @@
 import random
-import math
 import argparse
 from collections import Counter
 import os
-import matplotlib.pyplot as plt
-
-WORKLOAD_FILE_SAVE_PATH = "../data"
-
+from dir_paths import DATA_DIR
 
 def get_zipf_workload(num_unique: int, num_requests: int, alpha: int, debug: bool) -> list[int]:
     print(
@@ -38,10 +34,8 @@ def get_zipf_workload(num_unique: int, num_requests: int, alpha: int, debug: boo
 
 def file_save_workload(workload: list[int], filename: str):
 
-    os.makedirs(WORKLOAD_FILE_SAVE_PATH, exist_ok=True)
-    dir_path = WORKLOAD_FILE_SAVE_PATH.rstrip("/")
-
-    output_path = os.path.join(dir_path, filename)
+    os.makedirs(DATA_DIR, exist_ok=True)
+    output_path = os.path.join(DATA_DIR, filename)
     base, ext = os.path.splitext(output_path)
     counter = 1
     while os.path.exists(output_path):

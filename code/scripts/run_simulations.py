@@ -1,29 +1,9 @@
 import os
 import subprocess
 import time
+from dir_paths import DATA_DIR, CACHESIM_PATH, RESULTS_DIR
 
 def main() -> None:
-    """
-    # DIRECTORY SETUP:
-
-    ├── code                        # PARENT_DIR
-    |   ├── bin/
-    |   |   ├── bin/
-    |   |   |   ├── cachesim        # CACHESIM_PATH
-    |   |   |   └── ...
-    |   ├── data/                   # DATA_DIR
-    |   ├── scripts/                # SCRIPTS_DIR
-    |   ├── results/                # RESULTS DIR
-    |   └── ...
-    └── ...
-    """
-
-    SCRIPTS_DIR = os.path.dirname(os.path.abspath(__file__))
-    PARENT_DIR = os.path.dirname(SCRIPTS_DIR)
-    DATA_DIR = os.path.join(PARENT_DIR, 'data')
-    CACHESIM_PATH = os.path.join(PARENT_DIR, '_build', 'bin', 'cachesim')
-    RESULTS_DIR = os.path.join(PARENT_DIR, 'results')
-
     # Ensure results dir actually exists since cachesim does not create a new directory!
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
