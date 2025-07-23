@@ -43,6 +43,5 @@ Notable files and directories are outlined here:
 ├── figures/                            # Contains figures generated throughout the project, not all used in the final report
 ├── report/                             # LaTeX source of the thesis report
 ├── README.md
-
 └── .gitignore
 ```
