@@ -2,24 +2,36 @@
 
 \outline{What is the cache and why is it important}
 
-\lipsum[1]
+Since the early 2000s, the process of information retrieval has changed fundamentally. Where individuals once relied on libraries, printed newspapers, or other physical media to access information, the advent and widespread adoption of the internet have shifted this process to the digital realm. The deep integration of the internet into everyday life has made information retrieval faster, more convenient, and more central than ever before.
 
-\outline{How does the cache decide what to evict => introduce cache eviction policies}
+This shift has resulted in a rapidly increasing volume of WWW traffic, thus placing enormous pressure on web systems to deliver content quickly and reliably \cite{web-cache-overview}. One critical technique used to meet these demands is \textbf{web caching} - the temporary storage of frequently accessed data closer to users, which reduces server load, minimizes bandwidth consumption, and improves the perceived latency by the end user \cite{web-cache-performance, web-cache-overview}.
 
-\lipsum[1]
+\TODO{maybe add a sentence about how important latency is here, and cite the latency paper thing?}
+
+\outline{How does the cache decide what to evict $\Rightarrow$ introduce cache eviction policies}
+
+Cache systems are designed with the speed of delivery at their core; nevertheless, the storage capacity of such systems is scarce. To manage this space constraint effectively, caches must implement a strategy to manage stored items, effectively deciding on which items to "throw out", or evict, when storage runs out. These strategies are known as \textbf{cache eviction algorithms} or \textbf{cache replacement policies} \cite{web-cache-overview}.
 
 \outline{Different types of cache eviction algorithms. Not all are used in practice}
 
-\lipsum[1]
+Choosing an appropriate cache eviction algorithm for a given system requires an understanding that there is no universal "one size fits all" solution. Numerous algorithms exist, each designed to exploit specific patterns commonly observed in real-world scenarios. For instance, web systems often follow a Zipf-like distribution, where a small number of items account for a large portion of requests \cite{sieve, web-cache-overview}. This skewed access pattern is distinct from the more uniform patterns observed in traditional memory systems, thereby requiring specialized eviction strategies tailored to web workloads \cite{web-cache-overview}.
 
 \section{Problem Statement}
 
 \outline{Something about increased complexity of newer algorithms compared to older ones?}
 
-\section{Research Question}
+Web traffic keeps increasing [\textbf{source?}], and so does the complexity of newer cache eviction algorithms. What makes them more complex is using many different queues or other stuff like lots of metadata for example in XYZ algorithms [\textbf{source?}]. With the rise of AI there are also lots of new algorithms that integrate unpredictable AI models to determine eviction of cache items. More complex algorithms likely overfit on specific use cases and are not very generalisable. The problems with complexity are described in the sieve paper. This paper has observed this trend but unlike following the trend to create an ever more complex algorithm, the sieve algorithm is presented which aims to act as a simple cache eviction primitive that can be used as a building block for more complex algorithms. This is similar to LRU and FIFO which are also cache primitives. These cache primitives are the most used ones.
 
-\outline{Add research question here}
+\section{Research Question}\label{sec: research_q}
+
+\outline{Cache primitives, SIEVE vs LRU and FIFO, miss ratio}
+
+How do SIEVE compare to existing cache primitives? Is it competitive enough to be considered as a real competitor to widely used cache primitives LRU and FIFO?
+
+How is the miss ratio of the different cache primitives?
+
+And how does cache size affect the effectiveness of different cache primitives?
 
 \section{Thesis Outline}
 
-\outline{Outline of different chapters and briefly what topics are covered}
+\TODO{Outline of different chapters and briefly what topics are covered}

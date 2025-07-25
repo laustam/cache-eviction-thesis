@@ -5,13 +5,92 @@
 \usepackage{fancyhdr} % used for header customization
 \usepackage{todonotes}
 \usepackage{ifthen} % used to toggle commands on or off
+\usepackage{parskip}
+\usepackage{cite}
+
+\usepackage{listings} % for code snippets
+
+% code style for error messages
+\lstdefinestyle{compilation_error}{
+    language=text, % Specify plain text
+    backgroundcolor=\color{lightgray}, % Gray background
+    numbers=none, % No line numbers
+    frame=none,   % No frame
+    basicstyle=\ttfamily\footnotesize, % Typewriter font, small size
+    breaklines=true, % Allow text to wrap
+    showstringspaces=false, % Don't show spaces in strings
+    captionpos=b, % Caption at bottom (though we won't use one)
+    % Removed options like caption and label to ensure none appear
+}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{mPurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+\definecolor{codeblue}{rgb}{0.2,0.2,0.8} % A nice blue for function names
+
+\lstdefinestyle{CStyle}{
+    backgroundcolor=\color{backgroundColour},
+    % commentstyle=\color{mGreen},
+    % keywordstyle=\color{magenta},
+    % numberstyle=\tiny\color{mGray},
+    % stringstyle=\color{mPurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    language=C,
+    % frame=single,
+    rulecolor=\color{mGray}, % frame color
+    aboveskip=1.5ex, % Space above listing
+    belowskip=1.5ex, % Space below listing
+    framesep=4pt, % Space between code and frame
+        % --- New additions for blue function names ---
+    emph={init, free, get, find, insert, to_evict, evict, remove}, % List your C function names here
+    emphstyle=\color{codeblue}\bfseries, % Apply bold blue to the listed names
+}
+
+
+% makes citations clickable
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, % Makes the links colored instead of boxed
+    linkcolor=blue,  % Color for internal links (e.g., table of contents, citations)
+    citecolor=darkred,  % Color for citation links
+    urlcolor=blue,   % Color for URL links
+    filecolor=magenta, % Color for file links
+    bookmarks=true,  % Adds PDF bookmarks for sections, etc.
+    bookmarksnumbered=true, % Numbers the bookmarks
+    pdfpagemode=UseOutlines % Opens PDF with bookmarks panel open
+}
+
+\usepackage{cleveref} % adds "Figure" or whatever infront
+
+% custom colors
+\definecolor{darkred}{rgb}{0.7,0,0}
+\definecolor{lightgray}{rgb}{0.96,0.96,0.96}
+
+% numbered subsections
+\setcounter{secnumdepth}{3}
+
 \input{resources/commands.tex} % import custom commands
+
+% correctly format quotations
+\usepackage[autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+
 
 \renewcommand{\chaptername}{} % remove "chapter" from chapter headings
 
 \textwidth 15cm
 \textheight 22cm
-\parindent 10pt
 \oddsidemargin 0.85cm
 \evensidemargin 0.37cm
 
@@ -33,7 +112,7 @@
 
 \rule{.9\linewidth}{.6pt}\\
 \vspace{0.4cm}
-{\huge \bfseries Comparative Study of Cache \\ Eviction Algorithms\par}
+{\huge \bfseries A Comparative Study of Cache Primitives Across Diverse \\ Workload Distributions \par}
 \vspace{0.4cm}
 \rule{.9\linewidth}{.6pt}\\[1.5cm]
 \vspace*{2mm}
@@ -48,8 +127,7 @@
 
 \begin{tabular}{ll}
 {\it 1st supervisor:} & Wan Fokkink \\
-{\it daily supervisor:} & Wan Fokkink \\
-{\it 2nd reader:} & TBD \\
+{\it 2nd reader:} & Femke van Raamsdonk  \\
 \end{tabular}
 
 \vspace*{2cm}
@@ -70,18 +148,23 @@ of Science degree in Computer Science }
 \tableofcontents
 
 % Testing citations ----------------------
+\TODO{\textbf{Testing citations}
+
 Sieve citation\cite{sieve}
 
 Web caching overview citation\cite{web-cache-overview}
 
-S3-FIFO citation\cite{s3-fifo}
+S3-FIFO citation\cite{s3-fifo}}
+
+
 % ----------------------------------------
 
-\newpage\input{sections/introduction.tex}
-\newpage\input{sections/background.tex}
-\newpage\input{sections/design.tex}
-\newpage\input{sections/evaluation.tex}
-\newpage\input{sections/conclusion.tex}
-\input{sections/references.tex}
+\newpage\input{report/sections/introduction.tex}
+\newpage\input{report/sections/background.tex}
+\newpage\input{report/sections/design.tex}
+\newpage\input{report/sections/results}
+\newpage\input{report/sections/evaluation.tex}
+\newpage\input{report/sections/conclusion.tex}
+\input{report/sections/references.tex}
 
 \end{document}

@@ -1,3 +1,112 @@
 \chapter{Design and Implementation}
 
-\lipsum
+To answer the main research question of this work (posed in \Cref{sec: research_q}), several crucial design choices had to be made. The following three questions tackle each of these decisions:
+
+\begin{enumerate}
+    \item \textbf{Cache simulations}: how to benchmark cache eviction algorithms against different workloads.
+    \item \textbf{Eviction algorithms}: the kind of cache eviction algorithms to benchmark.
+    \item \textbf{Workloads}: the kind of workloads to use.
+\end{enumerate}
+
+
+The implementation of and motivation for each of these design choices is tackled in the following sub-sections, \Cref{sec: cache-simulations,sec: cache-eviction-algs,sec: workloads}.
+
+\section{Cache simulator}\label{sec: cache-simulations}
+
+\outline{What simulation library used and why?}
+
+The building and execution of cache simulations was performed using the cache simulator provided by \textbf{libCacheSim}\footnote{GitHub for libCacheSim library: \url{https://github.com/1a1a11a/libCacheSim}}, a high-performance open-source library specifically designed for cache simulation and trace analysis. This tool was chosen due to its simple extensibility of new algorithms and support for various workload formats, including CSV, BIN, TXT, and VSCSI files. 
+
+\subsection{Alternative cache simulators}
+
+For the execution of cache simulations, it was crucial to find an open-source cache simulator that supported specifying the cache eviction algorithm with which to evaluate performance on a given web workload. The libCacheSim library's strength lies in its detailed documentation on how to extend the framework with eviction algorithms or trace readers \footnote{Markdown file describing extendability of libCacheSim: \url{https://github.com/1a1a11a/libCacheSim/blob/develop/doc/advanced_lib_extend.md}}.
+
+
+many other cache simulators exist but many for hardware caches. important to specify that this work focuses on software caches, specifically web caches. aws highlights different kinds of software caches that are used in the context of web services (dns,
+
+\url{https://aws.amazon.com/caching/#topic-0}
+
+CacheSim\footnote{\url{https://github.com/yxchencs/CacheSim}} with research paper \cite{cachesim}
+
+Cache Simulator:
+"A state-of-the-art cache and memory hierarchy simulator featuring advanced prefetching, multi-processor support, and comprehensive performance analysis tools."
+\url{https://github.com/muditbhargava66/CacheSimulator}
+
+
+\TODO{why was this tool chosen?}
+
+\TODO{what alternatives exist?}
+
+
+
+\subsection{Setup issues with libCacheSim}
+
+It is notable that the open-source libCacheSim library, written in C/C++, has been developed primarily for Ubuntu 22.04 systems reliant on GCC (GNU Compiler Collection) for compilation. Due to this, there were many compatibility issues when setting up the library on the device used for development: an Apple MacBook Pro M1 reliant on the Clang compiler. As part of the effort of this work and as a contribution to the open-source project, many of these issues have been addressed, and GitHub pull requests \footnote{The following pull requests were made to the libCacheSim project: \url{https://github.com/1a1a11a/libCacheSim/pull/179}, \url{https://github.com/1a1a11a/libCacheSim/pull/181}, \url{https://github.com/1a1a11a/libCacheSim/pull/183}} have been made to improve the open-source project's cross-compatibility.
+
+Most issues were caused by an unsuccessful compilation on the macOS device. A major cause of this incompatibility stems from differences in compiler strictness (GCC vs. Clang) - Clang is known for being very strict and pedantic with its warnings, especially concerning potential portability issues or undefined behavior\cite{llvm_diagnostics}, causing many warnings silenced by GCC to be flagged as errors on Clang.
+
+Some interesting issues and discoveries related to cross-compatibility found in the libCacheSim codebase are briefly addressed below.
+
+\begin{description}
+    \item[Format specifier mismatches] 
+    
+    The libCacheSim codebase contains many \code{printf} statements for logging various details, such as the miss ratio of a single cache simulation run. A specific issue encountered was related to the non-portable use of format specifiers. Specifically, for variables of type \code{int64\_t} (signed 64-bit integer), the \code{\%ld} format specifier was used. This is a reasonable usage for Ubuntu (with GCC), but is an incorrect format specifier for macOS (with Clang), which expects \code{int64\_t} variables to use \code{\%lld} instead. This specific format string mismatch caused a compilation error on macOS, specifying the following issue:
+
+    \lstset{style=compilation_error}
+    
+    \begin{lstlisting}
+format specifies type `long' but the argument has type `int64_t' (aka `long long')
+    \end{lstlisting}
+
+    A naive solution to this compatibility issue could be wrapping \code{printf} statements with \enquote{problematic} format specifiers in preprocessor macros (i.e. \code{\#ifdef}, \code{\#if defined}, or \code{\#if}) to detect the operating system or compiler. However, this method adds conditional compilation complexity and makes maintenance so much more difficult. Instead, the optimal solution to ensure cross-compatibility lies within the \code{<inttypes.h>} header, where special format macros are defined that expand to the correct format specifier depending on the compilation platform. In the case of the \code{int64\_t} type, which requires format specifier \code{\%ld} on Ubuntu but \code{\%lld} on macOS, the \code{PRId64} macro can be used as a portable solution to the format specifier mismatch. The PRId64 macro is part of a family of macros known as format string macros for fixed-width integers introduced in the C99 standard \cite{cppreference_inttypes} to address these kinds of portability issues.
+    
+
+    \item[Unsupported linker options]
+
+
+    
+    \item[Path-dependent package manager]
+\end{description}
+
+
+
+% LibCacheSim also provides a rich set of features, including state-of-the-art eviction and admission algorithms, out-of-the-box parallelism, and comprehensive trace analysis functionalities, making it a robust and versatile solution for in-depth cache performance studies. Its simple API and extensibility further streamline the process of building complex cache hierarchies and integrating new algorithms.
+
+
+
+
+\outline{Describe setup process}
+
+
+
+
+
+\section{Cache eviction algorithms}\label{sec: cache-eviction-algs}
+
+To support the proper execution of a cache eviction algorithm, the libCacheSim simulator used in this work requires the implementation of eight methods for a newly added cache eviction algorithm, given by \cref{code: cache-functions}.
+
+\input{report/code/cache_eviction_template}
+
+Seeing as all of these methods use parameters with types specific to the library itself (i.e. \code{{common\_cache\_params\_t}}), it was crucial first to study the behavior and usage of these in the framework.
+
+\subsection{SIEVE}
+
+\subsection{LRU}
+
+\subsection{FIFO}
+
+\section{Workloads}\label{sec: workloads}}
+
+synthetic data
+
+zipf
+
+used relative measurements to make it scalable in some sense
+
+\section{Experimental setup}
+
+how big is a cache usually?
+
+looked at sieve paper to calculate percentages of unique requests in the traces they used
+
+\TODO{USING AUTO: "cachesim can detect the working set of the trace and automatically generate cache sizes at 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3 of the working set size. You can enable this feature by setting cache size to 0 or auto."}

@@ -1,3 +1,48 @@
-\chapter{Background and Related Work}
+\chapter{Background}
 
-\lipsum
+\outline{History of caches and caching}
+
+Cache systems have been around for a while. \textbf{When was the first cache introduced? Why was it needed? What problem did it solve?}
+
+\outline{Traditional vs web cache (access patterns, variability in size, ...)}
+
+\section{Web caching}
+
+\outline{Goal of web caching?}
+
+\outline{Different types of web caches (browser cache, proxy cache, reverse proxy, CDN cache ...)}
+
+\outline{Different use cases! (cite sieve paper)}
+
+\section{Cache eviction algorithms}
+
+
+\outline{Different eviction algorithms (deterministic vs randomized)}
+
+\outline{newly emerging algorithms using AI and shit, many overly complicated nowadays cite sieve}
+
+\section{Performance metrics}
+
+\outline{Performance metrics used for eviction algorithms}
+
+\outline{Consensus of what makes a good web cache eviction policy}
+
+\TODO{talk about the effect of different use cases having different trends}
+
+\section{Trends in web traffic}
+
+we want our algs to take advantage of these! but how can we do that if we dont know waaa! we think its mostly zipf but theres also some people saying for example the stretched exponent thing... we are lacking production traces for a good answer though!
+
+zipf blabla
+
+but also not always zipf
+
+lack of production traces!!!!!!!!!!
+
+zipf alpha value is different in different use cases, this work looks at effect of zipf parameter on performance of the different algs
+
+Relative frequency of item with rank $i$ is  \(\frac{1}{i^\alpha}\)  
+
+\section{Related work}
+
+???

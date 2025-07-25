@@ -1,0 +1,15 @@
+\chapter{Results}
+
+\section{Zipfian workloads}
+
+when generating the synthetic zipfian workloads, the number of unique items, aka the working set that should be sampled from was specified. these were specified as x y z
+
+because of the nature of probabilistic sampling (?), the actual working set was often less than the working set specified during sampling. 
+
+this can be seen nicely in the figure (point to figure) which overlays a boxplot with a vivian plot to better understand the shape of the generated workloads. here we plotted the ratio of actual to theoretical objects, or working set against the zipfian parameter used to generate a given workload
+
+
+we observe that for zipfian parameter $<  1.4$ the median is greater than the mean but when $>= 1.4$ the opposite is true. 
+
+
+\section{Cache simulations}
