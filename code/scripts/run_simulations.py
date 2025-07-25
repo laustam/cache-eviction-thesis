@@ -18,7 +18,8 @@ def main() -> None:
         file_path = os.path.join(DATA_DIR, filename)
         if os.path.isfile(file_path):
             base_filename = os.path.splitext(filename)[0]
-            cmd = [CACHESIM_PATH, file_path, 'txt', 'my_sieve,my_lru,my_fifo', 'auto', f'--output={RESULTS_DIR}/{base_filename}_results.txt']
+            # already run: [0.003, 0.01, 0.03, 0.1, 0.2, 0.4, 0.8]
+            cmd = [CACHESIM_PATH, file_path, 'txt', 'my_fifo,my_lru,my_sieve', '0.0001, 0.0002', f'--output={RESULTS_DIR}/{base_filename}_results.txt']
             subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 if __name__ == "__main__":
     main()
