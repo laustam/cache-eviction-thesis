@@ -7,7 +7,7 @@
 
 #include "../../include/libCacheSim/cache.h"
 #include "../../include/libCacheSim/evictionAlgo.h"
-#include "../../cache/eviction/mySieve.h"
+#include "../../cache/eviction/mySIEVE.h"
 #include "../../cache/eviction/myLRU.h"
 #include "../../cache/eviction/myFIFO.h"
 
@@ -33,7 +33,7 @@ static inline cache_t *create_cache(const char *trace_path, const char *eviction
   } eviction_algo_entry_t;
 
   static const eviction_algo_entry_t simple_algos[] = {
-      {"my_sieve", mySieve_init},
+      {"my_sieve", mySIEVE_init},
       {"my_lru",  myLRU_init},
       {"my_fifo", myFIFO_init},
       {"lru", LRU_init},

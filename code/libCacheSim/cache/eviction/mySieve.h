@@ -11,24 +11,24 @@ typedef struct {
     cache_obj_t *hand; // points to the current object, moves from tail towards head
     cache_obj_t *head; // head of queue
     cache_obj_t *tail; // tail of queue
-} mySieve_params_t;
+} mySIEVE_params_t;
 
 /* initialize all the variables */
-cache_t *mySieve_init(const common_cache_params_t ccache_params, const char *cache_specific_params);
+cache_t *mySIEVE_init(const common_cache_params_t ccache_params, const char *cache_specific_params);
 
 /* find an object in the cache, return the cache object if found, NULL otherwise, update_cache means whether update the cache state, e.g., moving object to the head of the queue */
-cache_obj_t *mySieve_find(cache_t *cache, const request_t *req, const bool update_cache);
+cache_obj_t *mySIEVE_find(cache_t *cache, const request_t *req, const bool update_cache);
 
 /* insert an object to the cache, return the cache object, this assumes the object is not in the cache */
-cache_obj_t *mySieve_insert(cache_t *cache, const request_t *req);
+cache_obj_t *mySIEVE_insert(cache_t *cache, const request_t *req);
 
 /* find the object to be evicted, return the cache object, not used very often */
-cache_obj_t *mySieve_to_evict(cache_t *cache, const request_t *req);
+cache_obj_t *mySIEVE_to_evict(cache_t *cache, const request_t *req);
 
 /* evict an object from the cache, req should not be used */
-void mySieve_evict(cache_t *cache, const request_t *req);
+void mySIEVE_evict(cache_t *cache, const request_t *req);
 
 /* remove an object from the cache, return true if the object is found and removed, note that this is used for user-triggered remove, eviction should use evict */
-bool mySieve_remove(cache_t *cache, const obj_id_t obj_id);
+bool mySIEVE_remove(cache_t *cache, const obj_id_t obj_id);
 
 #endif // MYSIEVE_H

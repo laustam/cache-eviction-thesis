@@ -25,8 +25,8 @@ Notable files and directories are outlined here:
 |   |   |   |   ├── myHelpers.h         # Helper functions used in algorithm implementations
 |   |   |   |   ├── myLRU.c
 |   |   |   |   ├── myLRU.h
-|   |   |   |   ├── mySieve.c
-|   |   |   |   ├── mySieve.h
+|   |   |   |   ├── mySIEVE.c
+|   |   |   |   ├── mySIEVE.h
 |   |   |   |   └── ...
 |   |   |   └── ...
 |   |   └── ...

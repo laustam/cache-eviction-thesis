@@ -1,5 +1,5 @@
 set(sourceC
-        mySieve.c
+        mySIEVE.c
         myLRU.c
         myFIFO.c
         FIFO.c
