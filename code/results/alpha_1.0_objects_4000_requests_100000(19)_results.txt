@@ -30,6 +30,7 @@
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt myLRU cache size     1181B, 100000 req, miss ratio 0.1996, byte miss ratio 0.1996
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt myLRU cache size     1575B, 100000 req, miss ratio 0.1561, byte miss ratio 0.1561
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt myLRU cache size     3150B, 100000 req, miss ratio 0.0580, byte miss ratio 0.0580
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size        0B, 100000 req, miss ratio 1.0000, byte miss ratio 1.0000
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size        1B, 100000 req, miss ratio 0.9792, byte miss ratio 0.9792
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size        3B, 100000 req, miss ratio 0.8775, byte miss ratio 0.8775
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size        7B, 100000 req, miss ratio 0.7572, byte miss ratio 0.7572
@@ -45,4 +46,3 @@
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size     1181B, 100000 req, miss ratio 0.1724, byte miss ratio 0.1724
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size     1575B, 100000 req, miss ratio 0.1388, byte miss ratio 0.1388
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size     3150B, 100000 req, miss ratio 0.0567, byte miss ratio 0.0567
-/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.0_objects_4000_requests_100000(19).txt mySIEVE cache size        0B, 100000 req, miss ratio 1.0000, byte miss ratio 1.0000
