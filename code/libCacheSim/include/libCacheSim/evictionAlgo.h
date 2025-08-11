@@ -6,17 +6,6 @@
 extern "C" {
 #endif
 
-typedef struct {
-  cache_obj_t *q_head;
-  cache_obj_t *q_tail;
-} FIFO_params_t;
-
-/* used by LFU related */
-typedef struct {
-  cache_obj_t *q_head;
-  cache_obj_t *q_tail;
-} LRU_params_t;
-
 /* used by LFU related */
 typedef struct freq_node {
   int64_t freq;
@@ -37,15 +26,6 @@ typedef struct {
   int64_t n_obj_rewritten;
   int64_t n_byte_rewritten;
 } Clock_params_t;
-
-cache_t *FIFO_init(const common_cache_params_t ccache_params,
-                   const char *cache_specific_params);
-
-cache_t *LRU_init(const common_cache_params_t ccache_params,
-                  const char *cache_specific_params);
-
-cache_t *Sieve_init(const common_cache_params_t ccache_params,
-                    const char *cache_specific_params);
 
 #ifdef __cplusplus
 }

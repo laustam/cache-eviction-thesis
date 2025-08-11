@@ -2,9 +2,6 @@ set(sourceC
         mySIEVE.c
         myLRU.c
         myFIFO.c
-        FIFO.c
-        LRU.c
-        Sieve.c
 )
 
 add_library (evictionC ${sourceC})
