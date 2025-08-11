@@ -35,10 +35,7 @@ static inline cache_t *create_cache(const char *trace_path, const char *eviction
   static const eviction_algo_entry_t simple_algos[] = {
       {"my_sieve", mySIEVE_init},
       {"my_lru",  myLRU_init},
-      {"my_fifo", myFIFO_init},
-      {"lru", LRU_init},
-      {"sieve", Sieve_init},
-      {"fifo", FIFO_init}
+      {"my_fifo", myFIFO_init}
   };
 
   cache_t *(*init_func)(common_cache_params_t, const char *) = NULL;
