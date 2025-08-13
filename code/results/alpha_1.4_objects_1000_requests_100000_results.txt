@@ -8,6 +8,7 @@
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myFIFO cache size       29B, 100000 req, miss ratio 0.3011, byte miss ratio 0.3011
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myFIFO cache size       39B, 100000 req, miss ratio 0.2608, byte miss ratio 0.2608
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myFIFO cache size       78B, 100000 req, miss ratio 0.1814, byte miss ratio 0.1814
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myFIFO cache size       97B, 100000 req, miss ratio 0.1591, byte miss ratio 0.1591
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myFIFO cache size      195B, 100000 req, miss ratio 0.1004, byte miss ratio 0.1004
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myFIFO cache size      293B, 100000 req, miss ratio 0.0720, byte miss ratio 0.0720
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myFIFO cache size      391B, 100000 req, miss ratio 0.0539, byte miss ratio 0.0539
@@ -22,6 +23,7 @@
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myLRU cache size       29B, 100000 req, miss ratio 0.2440, byte miss ratio 0.2440
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myLRU cache size       39B, 100000 req, miss ratio 0.2092, byte miss ratio 0.2092
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myLRU cache size       78B, 100000 req, miss ratio 0.1423, byte miss ratio 0.1423
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myLRU cache size       97B, 100000 req, miss ratio 0.1244, byte miss ratio 0.1244
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myLRU cache size      195B, 100000 req, miss ratio 0.0763, byte miss ratio 0.0763
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myLRU cache size      293B, 100000 req, miss ratio 0.0535, byte miss ratio 0.0535
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt myLRU cache size      391B, 100000 req, miss ratio 0.0393, byte miss ratio 0.0393
@@ -36,6 +38,7 @@
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt mySIEVE cache size       29B, 100000 req, miss ratio 0.1832, byte miss ratio 0.1832
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt mySIEVE cache size       39B, 100000 req, miss ratio 0.1535, byte miss ratio 0.1535
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt mySIEVE cache size       78B, 100000 req, miss ratio 0.1069, byte miss ratio 0.1069
+/Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt mySIEVE cache size       97B, 100000 req, miss ratio 0.0961, byte miss ratio 0.0961
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt mySIEVE cache size      195B, 100000 req, miss ratio 0.0569, byte miss ratio 0.0569
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt mySIEVE cache size      293B, 100000 req, miss ratio 0.0422, byte miss ratio 0.0422
 /Users/lauras/Documents/VU/Thesis/cache-eviction-thesis/code/data/alpha_1.4_objects_1000_requests_100000.txt mySIEVE cache size      391B, 100000 req, miss ratio 0.0331, byte miss ratio 0.0331
