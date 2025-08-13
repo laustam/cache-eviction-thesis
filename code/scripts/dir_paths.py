@@ -13,6 +13,7 @@ import os
 |   ├── results/                # RESULTS DIR
 |   └── ...
 ├── figures/                    # FIGURES_DIR
+├── tables/                     # TABLES DIR
 └── ...
 """
 
@@ -23,6 +24,7 @@ DATA_DIR = os.path.join(CODE_DIR, 'data')
 RESULTS_DIR = os.path.join(CODE_DIR, 'results')
 PROCESSED_DATA_DIR = os.path.join(CODE_DIR, 'processed_data')
 FIGURES_DIR = os.path.join(BASE_DIR, 'figures')
+TABLES_DIR = os.path.join(BASE_DIR, 'tables')
 FIGURES_WORKLOADS_DIR = os.path.join(FIGURES_DIR, 'workloads')
 FIGURES_SIMULATIONS_DIR = os.path.join(FIGURES_DIR, 'simulations')
 
