@@ -1,112 +1,143 @@
-\chapter{Design and Implementation}
+\chapter{Design and Implementation}\label{chapter:design}
 
-To answer the main research question of this work (posed in \Cref{sec: research_q}), several crucial design choices had to be made. The following three questions tackle each of these decisions:
-
-\begin{enumerate}
-    \item \textbf{Cache simulations}: how to benchmark cache eviction algorithms against different workloads.
-    \item \textbf{Eviction algorithms}: the kind of cache eviction algorithms to benchmark.
-    \item \textbf{Workloads}: the kind of workloads to use.
-\end{enumerate}
+This chapter tackles the design and implementation of the core components that make up this work's experiment, described in detail in \Cref{chapter:experimental-setup}. The core components here refer to (1) the cache simulator, (2) the generated workloads, and (3) the eviction algorithms used.
 
 
-The implementation of and motivation for each of these design choices is tackled in the following sub-sections, \Cref{sec: cache-simulations,sec: cache-eviction-algs,sec: workloads}.
+% #############################################################
 
-\section{Cache simulator}\label{sec: cache-simulations}
+\section{Cache Simulator}\label{sec: cache-simulations}
 
 \outline{What simulation library used and why?}
 
-The building and execution of cache simulations was performed using the cache simulator provided by \textbf{libCacheSim}\footnote{GitHub for libCacheSim library: \url{https://github.com/1a1a11a/libCacheSim}}, a high-performance open-source library specifically designed for cache simulation and trace analysis. This tool was chosen due to its simple extensibility of new algorithms and support for various workload formats, including CSV, BIN, TXT, and VSCSI files. 
+The building and execution of cache simulations was performed using the cache simulator provided by \keyword{libCacheSim}\footnote{GitHub for libCacheSim library: \url{https://github.com/1a1a11a/libCacheSim}}, a high-performance open-source library specifically designed for cache simulation and trace analysis. This tool was chosen due to its simple extensibility of new algorithms and support for various workload formats, including CSV, BIN, TXT, and VSCSI files.
 
-\subsection{Alternative cache simulators}
+For the execution of cache simulations, it was crucial to find an open-source cache simulator that supported specifying the cache eviction algorithm as well as a workload for a single simulation run. The libCacheSim library's strength lies in its detailed documentation on how to extend the framework with eviction algorithms or trace readers\footnote{Markdown file describing extendability of libCacheSim: \url{https://github.com/1a1a11a/libCacheSim/blob/develop/doc/advanced_lib_extend.md}}.
 
-For the execution of cache simulations, it was crucial to find an open-source cache simulator that supported specifying the cache eviction algorithm with which to evaluate performance on a given web workload. The libCacheSim library's strength lies in its detailed documentation on how to extend the framework with eviction algorithms or trace readers \footnote{Markdown file describing extendability of libCacheSim: \url{https://github.com/1a1a11a/libCacheSim/blob/develop/doc/advanced_lib_extend.md}}.
+\TODO{should i talk about alternatives ?}
 
+% \subsection{Alternative cache simulators}
 
-many other cache simulators exist but many for hardware caches. important to specify that this work focuses on software caches, specifically web caches. aws highlights different kinds of software caches that are used in the context of web services (dns,
+% many other cache simulators exist but many for hardware caches. important to specify that this work focuses on software caches, specifically web caches. aws highlights different kinds of software caches that are used in the context of web services (dns,
 
-\url{https://aws.amazon.com/caching/#topic-0}
+% \url{https://aws.amazon.com/caching/#topic-0}
 
-CacheSim\footnote{\url{https://github.com/yxchencs/CacheSim}} with research paper \cite{cachesim}
+% CacheSim\footnote{\url{https://github.com/yxchencs/CacheSim}} with research paper \cite{cachesim}
 
-Cache Simulator:
-"A state-of-the-art cache and memory hierarchy simulator featuring advanced prefetching, multi-processor support, and comprehensive performance analysis tools."
-\url{https://github.com/muditbhargava66/CacheSimulator}
-
-
-\TODO{why was this tool chosen?}
-
-\TODO{what alternatives exist?}
+% Cache Simulator:
+% "A state-of-the-art cache and memory hierarchy simulator featuring advanced prefetching, multi-processor support, and comprehensive performance analysis tools."
+% \url{https://github.com/muditbhargava66/CacheSimulator}
 
 
 
-\subsection{Setup issues with libCacheSim}
+\subsection{Setup Issues with libCacheSim}\label{sec:setup-issues}
 
-It is notable that the open-source libCacheSim library, written in C/C++, has been developed primarily for Ubuntu 22.04 systems reliant on GCC (GNU Compiler Collection) for compilation. Due to this, there were many compatibility issues when setting up the library on the device used for development: an Apple MacBook Pro M1 reliant on the Clang compiler. As part of the effort of this work and as a contribution to the open-source project, many of these issues have been addressed, and GitHub pull requests \footnote{The following pull requests were made to the libCacheSim project: \url{https://github.com/1a1a11a/libCacheSim/pull/179}, \url{https://github.com/1a1a11a/libCacheSim/pull/181}, \url{https://github.com/1a1a11a/libCacheSim/pull/183}} have been made to improve the open-source project's cross-compatibility.
+It is notable that the open-source libCacheSim library, written in C/C++, has been developed primarily for Ubuntu 22.04 systems reliant on GCC (GNU Compiler Collection) for compilation. Due to this, there were many compatibility issues when setting up the library on the device used for development: an Apple MacBook Pro M1 reliant on the Clang compiler. 
 
-Most issues were caused by an unsuccessful compilation on the macOS device. A major cause of this incompatibility stems from differences in compiler strictness (GCC vs. Clang) - Clang is known for being very strict and pedantic with its warnings, especially concerning potential portability issues or undefined behavior\cite{llvm_diagnostics}, causing many warnings silenced by GCC to be flagged as errors on Clang.
+As part of the effort of this work and as a contribution to the open-source project, many of these issues have been addressed, and GitHub pull requests have been made to improve the open-source project's cross-compatibility (see \Cref{PRs} for further details).
 
-Some interesting issues and discoveries related to cross-compatibility found in the libCacheSim codebase are briefly addressed below.
+\WAN{Is it better to move the following paragraphs into the Appendix?}
 
-\begin{description}
-    \item[Format specifier mismatches] 
-    
-    The libCacheSim codebase contains many \code{printf} statements for logging various details, such as the miss ratio of a single cache simulation run. A specific issue encountered was related to the non-portable use of format specifiers. Specifically, for variables of type \code{int64\_t} (signed 64-bit integer), the \code{\%ld} format specifier was used. This is a reasonable usage for Ubuntu (with GCC), but is an incorrect format specifier for macOS (with Clang), which expects \code{int64\_t} variables to use \code{\%lld} instead. This specific format string mismatch caused a compilation error on macOS, specifying the following issue:
+Most issues were caused by an unsuccessful compilation on the macOS device (addressed by PR \href{https://github.com/1a1a11a/libCacheSim/pull/183}{\#183}). A major cause of this incompatibility stems from differences in compiler strictness (GCC vs. Clang) - Clang is known for being very strict and pedantic with its warnings, especially concerning potential portability issues or undefined behavior\footnote{Clang Compiler's User Manual: \url{https://clang.llvm.org/docs/UsersManual.html\#diagnostics}}, causing many warnings silenced by GCC to be flagged as errors on Clang.
 
-    \lstset{style=compilation_error}
-    
-    \begin{lstlisting}
-format specifies type `long' but the argument has type `int64_t' (aka `long long')
-    \end{lstlisting}
+An interesting compilation issue is related to \keyword{format specifier mismatches}. The libCacheSim codebase contains \code{printf} statements for logging various details, many of which use format specifiers (i.e. \code{\%ld}, \code{\%lld}, \code{\%lu}, \code{\%llu}). Variables of certain types use different format specifiers on different platforms. For example, variables of type \code{int64\_t} (signed 64-bit integer) use the \code{\%ld} format specifier on Ubuntu/Linux (with GCC) while \code{\%lld} is needed as a format specifier of the same type on macOS (with Clang). 
 
-    A naive solution to this compatibility issue could be wrapping \code{printf} statements with \enquote{problematic} format specifiers in preprocessor macros (i.e. \code{\#ifdef}, \code{\#if defined}, or \code{\#if}) to detect the operating system or compiler. However, this method adds conditional compilation complexity and makes maintenance so much more difficult. Instead, the optimal solution to ensure cross-compatibility lies within the \code{<inttypes.h>} header, where special format macros are defined that expand to the correct format specifier depending on the compilation platform. In the case of the \code{int64\_t} type, which requires format specifier \code{\%ld} on Ubuntu but \code{\%lld} on macOS, the \code{PRId64} macro can be used as a portable solution to the format specifier mismatch. The PRId64 macro is part of a family of macros known as format string macros for fixed-width integers introduced in the C99 standard \cite{cppreference_inttypes} to address these kinds of portability issues.
-    
-
-    \item[Unsupported linker options]
-
-
-    
-    \item[Path-dependent package manager]
+\begin{description}[style=unboxed, leftmargin=0cm]
+    \item[Naive solution] A naive solution to this compatibility issue could be to use different format specifiers depending on the system's operating system and compiler. This could be done by wrapping \code{printf} statements containing \enquote{problematic} format specifiers in preprocessor macros (i.e. \code{\#ifdef}, \code{\#if defined}, or \code{\#if}). However, this method adds conditional compilation complexity and makes maintenance so much more difficult. 
+    \item[Improved solution] A cleaner, more optimal, and fool-proof solution to ensure cross-compatibility is the use of special format macros that expand to the correct format specifier depending on the compilation platform. In the case of the \code{int64\_t} type, which requires format specifier \code{\%ld} on Ubuntu/GCC but \code{\%lld} on macOS/Clang, the \code{PRId64} macro can be used as a portable solution to the format specifier mismatch. The \code{PRId64} macro, defined in the \code{<inttypes.h>} header, is part of a family of macros known as format string macros for fixed-width integers introduced in the C99 standard \footnote{Fixed width integer types (since C99): \url{https://en.cppreference.com/w/c/types/integer}} to address these kinds of portability issues.
 \end{description}
 
-
-
-% LibCacheSim also provides a rich set of features, including state-of-the-art eviction and admission algorithms, out-of-the-box parallelism, and comprehensive trace analysis functionalities, making it a robust and versatile solution for in-depth cache performance studies. Its simple API and extensibility further streamline the process of building complex cache hierarchies and integrating new algorithms.
-
-
-
+This specific issue concerns the non-portable use of format specifiers across platforms, but many different kinds of compilation issues were tackled. More details can be found in the description of the PR \href{https://github.com/1a1a11a/libCacheSim/pull/183}{\#183} itself.
 
 \outline{Describe setup process}
 
 
 
 
+\section{Cache Eviction Algorithms}\label{sec: cache-eviction-algs}
 
-\section{Cache eviction algorithms}\label{sec: cache-eviction-algs}
-
-To support the proper execution of a cache eviction algorithm, the libCacheSim simulator used in this work requires the implementation of eight methods for a newly added cache eviction algorithm, given by \cref{code: cache-functions}.
+To support the proper execution of a cache eviction algorithm, the libCacheSim simulator requires the implementation of eight methods for a newly added cache eviction algorithm, given by \Cref{code: cache-functions}.
 
 \input{report/code/cache_eviction_template}
 
-Seeing as all of these methods use parameters with types specific to the library itself (i.e. \code{{common\_cache\_params\_t}}), it was crucial first to study the behavior and usage of these in the framework.
+Seeing as all of these methods use parameters with types specific to the library itself (i.e. \code{common\_\\cache\_params\_t}), it was crucial to study the behavior and usage of these in the framework before implementation of specific algorithms.
+
+Some important design and implementation details common to all implemented algorithms are discussed below:
+
+\outline{something about why choosing cache eviction PRIMITIVES}
+
+\begin{description}[style=unboxed, leftmargin=0cm]
+    \item[Primitives] Notably, the algorithms chosen for this work are not only cache eviction algorithms, but also primitives. In this way, they can build the base for larger, more complex algorithms. The decision to focus primarily on cache eviction primitives stems from the goal to better understand SIEVE and how it compares to alternatives. Given that primitives are often interchangeable in larger cache policies, grasping the strengths and weaknesses of each allows for more effective development of the more complex systems.
+    \item[Data structures] All primitives use a doubly-linked list for the queue with pointers to the head and tail. Differences in their implementations lie in their eviction strategy, which, in the case of SIEVE relies on an additional hand pointer to some item in the doubly-linked list.
+\end{description}
+
+The following subsections give an overview of each of the cache eviction primitives implemented in this work, namely SIEVE, LRU, and FIFO.
 
 \subsection{SIEVE}
 
+SIEVE was first introduced in \citeauthor{sieve}'s \citeyear{sieve} paper entitled \textit{\citetitle{sieve}}. The paper's title already alludes to its goal of competing with long-standing cache eviction primitives such as LRU. The introduction of SIEVE is exciting for the innovation of web cache eviction research and further expands the pool of cache primitives available to be built on by larger, more complex policies.
+
+SIEVE's authors report that SIEVE is "an algorithm that is simpler than LRU and provides better than state-of-the-art efficiency and scalability for web cache workloads". Additionally, they state that SIEVE not only has a lower miss ratio than other cache eviction algorithms but also demonstrates impressive results against the more complex state-of-the-art algorithms. The focus of this work was largely motivated by the promising results of the SIEVE algorithm, as presented in \citeauthor{sieve}'s paper.
+
+% Sieve was only introduced last year in zhangs paper. this makes it very exciting for research purposes and expands the options for larger cache eviction policies to use primitives which sieve, lru, and fifo all are. 
+
+% sieve has been reported by the researchers themselves to be really great (add a direct quote here!) with lower miss ratios than other primitives as well as other larger algs which use it as an underlying primitive. this work stems out of curiousity of sieves new promising results and in some sense aims to verify the authors claim with the experiment
+
+The SIEVE cache algorithm is said to achieve its efficiency through a few key properties that distinguish it from other caching strategies. The \keyword{moving hand} is a crucial element that is said to function like "an adaptive filter that removes unpopular objects from the cache" \cite{sieve}. Unlike other algorithms that reorder the list on every access, SIEVE employs "lazy promotion" on a cache hit by simply setting a flag on the entry, entirely avoiding otherwise expensive manipulation. Additionally, "quick demotion" of unpopular items occurs when the moving hand encounters an item with its promotion flag unset, leading to its immediate eviction. If the flag is set, the hand simply clears it and moves on, giving the recently used item a second chance. This simple mechanism allows SIEVE to achieve a low miss ratio with great scalability \cite{sieve}.
+
+
+% sieve has some specific properties that are described in the paper which are especially powerful for workloads with zipfian distributions. describe them here.
+
+\outline{SIEVE how it works}
+
+\begin{description}
+    \item[Design] 
+    
+    SIEVE's design requires a FIFO queue and a "hand" pointer that traverses it from tail to head. Each item in the queue is associated with a Boolean visited bit, which ultimately determines the eviction of items pointed to by the hand. Initially, all objects in the queue have the visited set to false. Then, there are two cases relevant to eviction, depending on whether the item of a new request is already present in the queue:
+
+    \begin{enumerate}[label=(\arabic*)]
+        \item If a newly encountered item is already present in the queue, the only change is to set the visited bit of the request item to true; its position in the queue is unchanged (it does not move to the head of the queue). In this way, the popularity of the object is recorded. Notably, the hand pointer remains stationary, and the size of the queue remains constant.
+        \item If a newly encountered item is not yet present in the queue, it is always appended at the head of the queue. In the event that the queue is not yet full, the hand pointer remains stationary. However, in the case of a full queue, the hand pointer moves over any visited objects and sets their visited status to false until encountering an `unpopular' object (with the visited bit set to false) for eviction. It is notable that the new item does not take the place of the evicted item, but is always appended at the head of the queue. 
+    \end{enumerate}
+    
+\end{description}
+
+
+
+\WAN{Would it be helpful to include pseudocode here?}
+
+% \subsubsection{SIEVE: Implementation}
+
+% The implementation of SIEVE in this work uses a doubly-linked list as a queue
+
+% \outline{SIEVE how it was implemented}
+
+% - using a queue
+% - 
+
 \subsection{LRU}
+
+The LRU (Least Recently Used) replacement policy is foundational to cache systems, having been studied in several early computer systems of the twentieth century \cite{eval-storage-hierarchies, virtual-storage-study}. Comparisons between LRU and FIFO in memory systems have also long been discussed \cite{lru-better-than-fifo}. In fact, LRU and FIFO are still used in most caching systems and libraries nowadays \cite{sieve}. For this reason, it is of great interest to study these more foundational algorithms against the newer SIEVE.
+
+\begin{description}
+    \item[Design]
+    The design of LRU is intuitive and simple, with the principle for cache eviction accurately summarized by its name: "least recently used"; the items that have been least recently used are evicted. Similar to SIEVE, LRU's design uses a queue with head and tail pointers, with new objects always inserted at the head. The notable difference to SIEVE is the lack of a "hand" pointer used to determine the object to evict; instead, the eviction victim always is that which sits at the tail of the queue, signifying that it has been used the least recently. When a newly encountered item is already present in the queue, the item is displaced to the very front of the queue, at its head, effectively signaling its recent use. This displacement of recalled items is different from SIEVE's approach of toggling a visited bit when an item is requested anew (without displacement).
+\end{description}
+
 
 \subsection{FIFO}
 
-\section{Workloads}\label{sec: workloads}}
+Much like the LRU algorithm, the concept of FIFO (First In First Out) is well established, even beyond the realms of cache systems, as a fundamental data structure \cite{lock-free-fifo}. 
 
-synthetic data
+\begin{description}
+    \item[Design] Similar to LRU, FIFO relies on a single queue with head and tail. New items are added at the head and old items are evicted at the tail: "first in, first out". The crucial difference that makes FIFO a more "primitive" eviction algorithm than LRU is that no displacement of recalled items occurs; if a new item already exists in the queue, its position is left unchanged. In this way, there is no inherent principle that makes some items live longer in the queue than others; all items are given equal priority. This differs from both SIEVE and LRU, which aim to retain popular items in the queue when recalled.
+\end{description}
 
-zipf
+% \TODO{some overlap with lru implementation (which ones?) so abstracted into helper methods}
 
-used relative measurements to make it scalable in some sense
+\section{Workloads}\label{sec: workloads}
 
-\section{Experimental setup}
+Web workloads have been widely observed to follow Zipfian distributions, as discussed in \Cref{bkg: zipfian-distributions}. For this reason, this work aims to evaluate algorithms on Zipf-like distributions to simulate the kind of web traffic observed in real life. Due to different skewness parameters being reported across previous research, a range of different $\alpha$ values is tested in this paper. Additionally, the working set sizes used are inspired by those reported across varying open-source and proprietary production datasets in \citeauthor{sieve}'s paper, which range from 2\% to 33\% of unique items. More details on the specific parameter values used and the generation of Zipf-like workloads are discussed in \Cref{subsec: synthetic-data-generation}.
 
-how big is a cache usually?
-
-looked at sieve paper to calculate percentages of unique requests in the traces they used
-
-\TODO{USING AUTO: "cachesim can detect the working set of the trace and automatically generate cache sizes at 0.0001, 0.0003, 0.001, 0.003, 0.01, 0.03, 0.1, 0.3 of the working set size. You can enable this feature by setting cache size to 0 or auto."}
+% synthetic data
+% zipf
+% used relative measurements to make it scalable in some sense

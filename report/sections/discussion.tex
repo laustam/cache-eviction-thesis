@@ -1,0 +1,75 @@
+\chapter{Discussion}\label{chapter:discussion}
+
+This chapter discusses the results presented in \Cref{chapter:results}. In \Cref{discussion:interpretation}, an explanation of the results is given, in relation to the research goal from \Cref{sec: research_q}. \Cref{discussion:literature} tackles how our results align with previous research. Then, \Cref{discussion:implications} explores the real-world or theoretical implications of our findings. Lastly, \Cref{discussion:limitations} highlights some strengths and weaknesses of the study, including potential sources of error.
+
+\section{Interpretation of Findings}\label{discussion:interpretation}
+
+\outline{Explains what your results mean in relation to your research questions.}
+
+This work's primary objective was to evaluate the performance of SIEVE against established cache eviction primitives, namely FIFO and LRU, under Zipf-like workloads. The results conclusively demonstrate that SIEVE is a superior alternative, consistently outperforming both baselines. The miss ratio distribution for SIEVE is significantly lower by every metric: its mean, median, minimum, and interquartile range. This performance advantage is robust, as SIEVE continues to outperform FIFO and LRU across all tested values of the Zipfian skewness parameter, $\alpha$. Collectively, these findings affirm that SIEVE possesses significant potential for implementation in web systems where access patterns are characterized by Zipfian distributions.
+
+\section{Comparison to Literature}\label{discussion:literature}
+
+\outline{Discusses how your results align with or differ from previous research.}
+
+These results align strongly with the original SIEVE paper \cite{sieve}, which presented the algorithm as a more efficient and less complex alternative to LRU. Our findings provide a powerful quantitative reinforcement of this claim, showing a clear performance hierarchy where SIEVE consistently achieves a lower miss ratio. A particularly notable point is the observed relationship between performance and the Zipfian skewness parameter $\alpha$. As $\alpha$ increases, making the workload more skewed, the performance gap between SIEVE and the other algorithms becomes more pronounced. This reinforces the principle that SIEVE's design is particularly well-suited for the highly-skewed access patterns common in real-world Zipf-like web systems.
+
+\section{Implications}\label{discussion:implications}
+
+\outline{Explores the real-world or theoretical implications of your findings.}
+
+While our research supports the core claims of the original paper, it also provides several new insights. By evaluating a wide range of $\alpha$ values, our study offers a more nuanced understanding of where SIEVE's advantages are most significant. From the findings of this work, it is clear that SIEVE shows great potential for use as a cache eviction primitive. The observed performance improvements suggest that adopting SIEVE could lead to a tangible reduction in a production web system's miss ratio, regardless of the type of Zipfian distribution followed.
+
+\section{Limitations and Evaluation}\label{discussion:limitations}
+
+\outline{Critically assesses the strengths and weaknesses of your study, including potential sources of error.}
+
+An evaluation of the findings of this work reveals several limitations, discussed in more detail here.
+
+\begin{description}
+    \item[Workloads] The efficiency of all cache eviction primitives was measured using synthetic workloads sampled from Zipfian distributions. While this approach allowed for a controlled simulation environment by isolating the impact of the Zipfian skewness parameter, it may not fully capture the complexity of access patterns present in real-world production systems, which are likely more complex than a simple Zipfian distribution. A major challenge in this regard was the lack of access to large, recent, open-source production traces, which would have provided a more representative evaluation. However, there would likely be a physical hardware limitation in terms of computational power and space to run terabyte-sized production workloads.    
+    
+    \item[Performance metric] A significant limitation of this work is its exclusive focus on the miss ratio as a measure of cache performance. A complete system evaluation would require additional consideration of throughput, especially if the goal was more geared towards performance in real-world systems. The inherent tradeoff between miss ratio and throughput is not considered by this work, due to difficulties that presented themselves during setup of the libCacheSim library and unsuccessful setup of the DAS-5 cluster.
+    
+    \item[Cache objects] The results of this study were limited by a number of simplifying assumptions about the objects present in the cache. Most notably, we assume that each cache object is the size of a byte, which implies that the byte and object miss ratios are equivalent in the scope of this work. Furthermore, the model does not account for the expiration of cached objects, a crucial factor in real-world systems. These simplifications could potentially impact the generalizability of the findings to more complex environments.
+    
+    \item[Unbalanced design] The experimental design contained an imbalance in the number of runs per relative cache size, due to each workload having (only) 100,000 requests, resulting in a simulation coverage of 93.3\% (85,113 instead of 91,200 simulation runs). Fortunately, only lower cache sizes (relative cache sizes $< 0.001$) were impacted by this imbalance (see \Cref{appendix:relative-cache-size-simulations}); these are far less interesting cases in the evaluation than the larger, more relevant and realistic cache sizes. Nevertheless, this lack of uniformity may have still introduced some bias in the results for the affected cache sizes. While the overall trends remain robust, a more balanced design with an equal number of runs for each cache size would have provided more statistically reliable and conclusive results.
+\end{description}
+
+
+
+\TODO{i should mention the fact that we had unbalanced design probably in the design section... maybe even add a table somewhere with an overview}
+
+
+
+% relative cache size is pretty good estimate!
+
+% SYNTHETIC WORKLOADS
+% - drawback of using synthetic workloads: not representative of real production systems (cite twitter-analysis)
+% - major drawback is not having access to open source production stuff
+% - limited understanding of distributions IRL
+% - not realistic because cache size small and workload small; sieve paper in comparison had several millions of requests
+
+% - we dont consider throughput; issues with das-5 setup!
+% - effect of throughput in choosing a good cache size %%%%%%%%%%%% FUTURE WORK?
+
+% - didnt consider that each object has different size IRL (cite some shit here), assumption that each object == 1 byte
+
+% - ⚠ Unbalanced design: Cache sizes have varying numbers of runs
+% -> can be made balanced by increasing the total number of objects ig but also, do we really care about such small cache sizes?????
+% Additionally, the experimental hardware used presented limitations in terms of computational power and space, leading to workloads with a total of (only) 100,000 requests each. 
+
+
+
+
+
+
+
+
+
+
+% - no warming up the cache
+
+
+% - did not evaluate if the number of requests changes shit -> %%%%%%%%%%%%%%%%%%%%%%%% future work?
+% -> this likely impacted the working set ratio thing!

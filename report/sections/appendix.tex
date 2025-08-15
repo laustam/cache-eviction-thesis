@@ -1,0 +1,151 @@
+\appendix
+
+\chapter{libCacheSim Simulator Modifications}\label{PRs}
+
+This project relied heavily on the libCacheSim library, which had many compatibility issues (as discussed in \Cref{sec:setup-issues}). These issues were fixed. The following overview summarizes all pull requests made to the libCacheSim project to address the issues encountered.
+
+\LTXtable{\textwidth}{resources/pr_table.tex}
+
+
+\chapter{Supplementary Experiment Material}
+
+\section{Cache Simulation Details}
+
+A total of 85,113 cache simulations were performed, representing 93.3\% of the potential maximum of 91,200. The reason for not achieving this maximum is due to small working set sizes that restricted the number of relative cache sizes that could be tested.
+
+\subsection{Effect of working set size on minimum relative cache size and number of simulations}\label{appendix: working-set-size-vs-relative-cache-size}
+
+The following table, \Cref{tab: min_relative_cache_size}, demonstrates the minimum relative cache sizes that were used during cache simulations with workloads of a specific (theoretical) working set size, along with the number of simulations performed for each configuration. Note that there is a difference between the actual working set of a workload to the theoretical working set used as a parameter during workload generation.
+
+\begin{table}[h!]
+    \centering
+    \caption{Minimum Relative Cache Size for Different Working Set Sizes}
+    \label{tab: min_relative_cache_size}
+    \begin{tabular}{ccc}
+        \toprule
+        \makecell{\textbf{Working set} \\ \textbf{size}} & \makecell{\textbf{Min. relative} \\ \textbf{cache size}} & \makecell{\textbf{Number of} \\ \textbf{simulations}} \\
+        \midrule
+        1,000 & 0.0008 & 6,450 \\
+        2,000 & 0.0004 & 6,990\\
+        3,000 & 0.0002 & 7,374 \\
+        4,000 & 0.0002 & 7,752 \\
+        5,000 & 0.0001 & 8,019 \\
+        10,000 & 0.0001 & 8,304 \\
+        20,000 & 0.0001 & 8,613 \\
+        30,000 & 0.0001 & 8,586 \\
+        40,000 & 0.0001 & 8,634 \\
+        50,000 & 0.0001 & 8,649 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Effect of relative cache size on number of simulations}\label{appendix:relative-cache-size-simulations}
+
+\Cref{tab:data_size} demonstrates the total number of simulations run for varying relative cache sizes. A maximum of 48,000 was possible for each relative cache size, only achieved by relative sizes upwards of 0.001.
+
+\begin{table}[h!]
+    \centering
+    \caption{Number of Simulations Per Relative Cache Size}
+    \label{tab:data_size}
+    \begin{tabular}{cc}
+        \toprule
+        \textbf{Relative Cache Size} & \textbf{Simulation Count} \\
+        \midrule
+        0.0001 & 19,590 \\
+        0.0002 & 32,400 \\
+        0.0004 & 42,600 \\
+        0.0008 & 36,540 \\
+        0.0010 - 0.8000 & 48,000 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+
+
+
+
+
+\section{Mean Miss Ratio Results}\label{appendix:mean-miss-ratio}
+
+\subsection{Mean Miss Ratio vs. Zipfian Skewness Parameter $\alpha$}
+
+The following table \cref{tab: miss_ratio_by_alpha} highlights the impact of the Zipfian Skewness Parameter $\alpha$ on the mean miss ratio of each algorithm.
+
+\begin{table}[h!]
+    \centering
+    \caption{Mean Miss Ratio by Algorithm and Zipfian Skewness Parameter ($\alpha$)}
+    \label{tab: miss_ratio_by_alpha}
+    \begin{tabular}{c c c c}
+        \toprule
+        \textbf{$\alpha$} & \textbf{FIFO} & \textbf{LRU} & \textbf{SIEVE} \\
+        \midrule
+        0.2 & 0.8959 & 0.8951 & 0.8915 \\
+        0.4 & 0.8832 & 0.8794 & 0.8610 \\
+        0.6 & 0.8470 & 0.8365 & 0.7926 \\
+        0.8 & 0.7645 & 0.7438 & 0.6751 \\
+        1.0 & 0.6257 & 0.5950 & 0.5206 \\
+        1.2 & 0.4817 & 0.4475 & 0.3888 \\
+        1.4 & 0.3630 & 0.3304 & 0.2918 \\
+        1.6 & 0.2882 & 0.2594 & 0.2354 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Additionally, both the absolute and percentage advantage of SIEVE over FIFO and LRU are more clearly demonstrated by \Cref{tab: sieve_advantage}. Please note that these values were computed using the true miss ratios without the rounding from \Cref{tab: miss_ratio_by_alpha}, and thus differ slightly to manual computation.
+
+\begin{table}[h!]
+    \centering
+    \caption{Advantage of SIEVE over FIFO and LRU}
+    \label{tab: sieve_advantage}
+    \begin{tabular}{l rr rr}
+        \toprule
+        \textbf{$\alpha$} & \multicolumn{2}{c}{\textbf{vs. FIFO}} & \multicolumn{2}{c}{\textbf{vs. LRU}} \\
+        \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+        & \textbf{Abs.} & \textbf{($\%$)} & \textbf{Abs.} & \textbf{($\%$)} \\
+        \midrule
+        0.2 & 0.0044 & 0.49 & 0.0037 & 0.41 \\
+        0.4 & 0.0222 & 2.51 & 0.0184 & 2.09 \\
+        0.6 & 0.0544 & 6.42 & 0.0439 & 5.25 \\
+        0.8 & 0.0894 & 11.70 & 0.0688 & 9.24 \\
+        1.0 & 0.1051 & 16.80 & 0.0744 & 12.51 \\
+        1.2 & 0.0929 & 19.29 & 0.0587 & 13.12 \\
+        1.4 & 0.0712 & 19.62 & 0.0386 & 11.69 \\
+        1.6 & 0.0528 & 18.33 & 0.0240 & 9.26 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Mean Miss Ratio vs. Relative Cache Size}\label{appendix:rel-cache-size}
+
+\Cref{tab:miss_ratio_data} lists the mean miss ratios measured per algorithm for varying values of the relative cache size. See \Cref{results:miss-ratio-vs-relative-cache-size} for a more in-depth analysis of these numerical results.
+
+\begin{table}[h!]
+    \centering
+    \caption{Mean Miss Ratio vs. Relative Cache Size}
+    \label{tab:miss_ratio_data}
+    \begin{tabular}{cccc}
+        \toprule
+        \textbf{Cache Size} & \textbf{FIFO} & \textbf{LRU} & \textbf{SIEVE} \\
+        \midrule
+        0.0001 & 0.9976 & 0.9976 & 0.9971 \\
+        0.0002 & 0.9910 & 0.9909 & 0.9846 \\
+        0.0004 & 0.9701 & 0.9689 & 0.9525 \\
+        0.0008 & 0.9457 & 0.9397 & 0.9045 \\
+        0.0010 & 0.9091 & 0.9014 & 0.8665 \\
+        0.0020 & 0.8487 & 0.8293 & 0.7744 \\
+        0.0030 & 0.8114 & 0.7858 & 0.7223 \\
+        0.0040 & 0.7860 & 0.7576 & 0.6906 \\
+        0.0080 & 0.7256 & 0.6953 & 0.6284 \\
+        0.0100 & 0.7067 & 0.6767 & 0.6110 \\
+        0.0200 & 0.6494 & 0.6212 & 0.5603 \\
+        0.0300 & 0.6159 & 0.5889 & 0.5316 \\
+        0.0400 & 0.5915 & 0.5653 & 0.5107 \\
+        0.0800 & 0.5278 & 0.5032 & 0.4568 \\
+        0.1000 & 0.5048 & 0.4806 & 0.4374 \\
+        0.2000 & 0.4205 & 0.3975 & 0.3659 \\
+        0.3000 & 0.3581 & 0.3362 & 0.3129 \\
+        0.4000 & 0.3058 & 0.2853 & 0.2683 \\
+        0.8000 & 0.1484 & 0.1379 & 0.1354 \\
+        \bottomrule
+    \end{tabular}
+\end{table}

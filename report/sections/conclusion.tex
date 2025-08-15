@@ -1,13 +1,45 @@
-\chapter{Conclusion}
+\chapter{Conclusion}\label{chapter:conclusion}
+
+This work explored the performance of different cache eviction primitives (SIEVE, LRU, and FIFO) using synthetic workloads drawn from Zipf-like distributions. Performance was measured using the miss ratio of each algorithm. The primary objective was to gain insight into whether SIEVE's performance is comparable to that of the long-established LRU and FIFO policies commonly used in production systems. The findings of this study conclusively that SIEVE is a superior alternative, consistently outperforming its competitors. This performance advantage holds across multiple measured metrics, even when taking into consideration the effects of the Zipfian skewness parameter $\alpha$ or relative cache sizes on an algorithm's performance. 
+
+The key contribution of this research is the quantitative reinforcement of SIEVE's efficacy under a controlled, Zipf-like environment. Our analysis provides a solid understanding of where SIEVE's advantages are most significant in relation to the skewness of a Zipf-like workload. Additionally, this work also provides insights gained regarding the impact of a workload's skewness and relative cache size on algorithm-independent cache miss ratios. Despite some experimental limitations, this work provides a good theoretical framework for further, more extensive research into cache eviction algorithms for web systems.
 
 \section{Future Work}
+The findings of this work, combined with its limitations outlined in \Cref{discussion:limitations}, offer a starting point for continued exploration. The following research directions are suggested to build upon our results and address the identified shortcomings of this study.
 
-\outline{Ideas for future work}
 
-- test with proprietary traces
+\begin{description}
 
-- more traces need to be available for use! (cite twitter-analysis here)
+    \item[Larger datasets and workload distributions]
+    To make the findings of this study more robust and generalizable, a key area for future work is the use of larger-scale workloads with a higher number of requests. The limited computational power and storage on our experimental hardware necessitated a smaller simulation size, which may not fully reflect real-world behavior. Additionally, while the Zipfian distribution is a widely accepted model for web traffic, real-world access patterns can exhibit more complex, non-uniform characteristics. Future studies could investigate the performance of these primitives using workloads that slightly distort the traditional Zipfian distribution to better account for this "randomness" or by modeling other types of non-uniform distributions.
 
-- running same algorithms on different production traces grouped by use case, and seeing whether there are trends there. for example, social media trends could be very different to others maybe
 
-- looking at throughput as well, since not only efficiency matters lol
+    % - looking at throughput as well, since not only efficiency matters lol
+    \item[Evaluating throughput and efficiency trade-offs]
+    A major improvement to this work would be to consider a broader range of performance metrics, given that this study's exclusive focus on miss ratio overlooks the trade-off between efficiency and throughput. A more thorough analysis of the effects of different Zipf-like distributions, cache sizes, and working set sizes on both metrics could provide meaningful insight into whether SIEVE continues to outperform LRU and FIFO when operational overhead is taken into account. Understanding this trade-off is essential for determining the optimal cache size and eviction policy for a given system.
+
+    % - test with proprietary traces
+    % - more traces need to be available for use! (cite twitter-analysis here)
+    % - is zipf actually representative of real web workloads? how does different type of web traffic impact the access patterns observed, i.e. social media vs. search engines?
+    % - running same algorithms on different production traces grouped by use case, and seeing whether there are trends there. for example, social media trends could be very different to others maybe
+    \item[Analysis of real-world traces]
+    An important next step is to validate these simulation results using real-world production traces. Additionally, this is highly relevant to the progression of web cache research as a whole. As previously noted in the work by \citeauthor{twitter-analysis}, there is a need for more publicly available proprietary traces to better understand real-world access patterns, and to validate whether a Zipfian distribution is most suitable to optimize on. Not only could it be valuable for future research to test the same algorithms on different production traces, but also to categorize results by their use case to identify if performance trends are consistent across various types of web traffic (i.e. social media or search engines). This would help to determine if the Zipfian model is truly representative of real-world workloads and if different eviction primitives are better suited for specific application types with potentially varying access patterns.
+
+
+    % - integrating cache eviction primitives into more specific production policies
+    \item[Investigating complex policies]
+    This work focused on the performance of cache eviction primitives themselves. An interesting direction for future research would be to integrate these primitives into larger, more complex, and use-case-specific policies. This would allow for an evaluation of whether and how each primitive's relative performance changes within a more realistic context.
+    
+\end{description}
+
+
+
+% how relative cache sizes impact miss ratio; further investigate how this impacts the RATE at which miss ratios decrease -> "point of diminishing returns"
+
+
+
+
+
+
+\TODO{could add a section in background about different types of web traffic (i.e. direct vs organic traffic)}
+

@@ -1,37 +1,45 @@
-\chapter{Introduction}
+\chapter{Introduction}\label{chapter:introduction}
 
 \outline{What is the cache and why is it important}
 
 Since the early 2000s, the process of information retrieval has changed fundamentally. Where individuals once relied on libraries, printed newspapers, or other physical media to access information, the advent and widespread adoption of the internet have shifted this process to the digital realm. The deep integration of the internet into everyday life has made information retrieval faster, more convenient, and more central than ever before.
 
-This shift has resulted in a rapidly increasing volume of WWW traffic, thus placing enormous pressure on web systems to deliver content quickly and reliably \cite{web-cache-overview}. One critical technique used to meet these demands is \textbf{web caching} - the temporary storage of frequently accessed data closer to users, which reduces server load, minimizes bandwidth consumption, and improves the perceived latency by the end user \cite{web-cache-performance, web-cache-overview}.
-
-\TODO{maybe add a sentence about how important latency is here, and cite the latency paper thing?}
+This shift has resulted in a rapidly increasing volume of web traffic ("WWW traffic"), thus placing enormous pressure on web systems to deliver content quickly and reliably \cite{web-cache-overview}. In fact, recent market research suggests that "fixed" web traffic will more than double by 2030 \cite{digital-global-report}. One critical technique used to meet these demands is to reduce network latency through \keyword{web caching} - the temporary storage of frequently accessed data closer to users or in faster-access locations, which reduces server load, minimizes bandwidth consumption, and improves the perceived latency by the end user \cite{latency-caching, web-cache-overview}.
 
 \outline{How does the cache decide what to evict $\Rightarrow$ introduce cache eviction policies}
 
-Cache systems are designed with the speed of delivery at their core; nevertheless, the storage capacity of such systems is scarce. To manage this space constraint effectively, caches must implement a strategy to manage stored items, effectively deciding on which items to "throw out", or evict, when storage runs out. These strategies are known as \textbf{cache eviction algorithms} or \textbf{cache replacement policies} \cite{web-cache-overview}.
+Cache systems are designed with the speed of delivery at their core; however, the storage capacity of such systems is scarce. To manage this tradeoff between speed and space constraints effectively, caches implement a strategy to manage stored items, effectively deciding on which items to "throw out", or evict, when storage runs out. These strategies are known as \keyword{cache eviction algorithms} or \keyword{cache replacement policies} \cite{web-cache-overview}.
+
 
 \outline{Different types of cache eviction algorithms. Not all are used in practice}
 
-Choosing an appropriate cache eviction algorithm for a given system requires an understanding that there is no universal "one size fits all" solution. Numerous algorithms exist, each designed to exploit specific patterns commonly observed in real-world scenarios. For instance, web systems often follow a Zipf-like distribution, where a small number of items account for a large portion of requests \cite{sieve, web-cache-overview}. This skewed access pattern is distinct from the more uniform patterns observed in traditional memory systems, thereby requiring specialized eviction strategies tailored to web workloads \cite{web-cache-overview}.
+Choosing an appropriate cache eviction algorithm for a given system requires an understanding that there is no universal "one size fits all" solution. Numerous algorithms exist, each designed to exploit specific patterns commonly observed in real-world scenarios. For instance, web systems often follow a \keyword{Zipf}-like distribution, where a small number of items account for a large portion of requests \cite{sieve, web-cache-overview}. This skewed access pattern is distinct from the more uniform patterns observed in traditional memory systems, thereby requiring specialized eviction strategies tailored to web workloads \cite{web-cache-overview}.
+
 
 \section{Problem Statement}
 
 \outline{Something about increased complexity of newer algorithms compared to older ones?}
 
-Web traffic keeps increasing [\textbf{source?}], and so does the complexity of newer cache eviction algorithms. What makes them more complex is using many different queues or other stuff like lots of metadata for example in XYZ algorithms [\textbf{source?}]. With the rise of AI there are also lots of new algorithms that integrate unpredictable AI models to determine eviction of cache items. More complex algorithms likely overfit on specific use cases and are not very generalisable. The problems with complexity are described in the sieve paper. This paper has observed this trend but unlike following the trend to create an ever more complex algorithm, the sieve algorithm is presented which aims to act as a simple cache eviction primitive that can be used as a building block for more complex algorithms. This is similar to LRU and FIFO which are also cache primitives. These cache primitives are the most used ones.
+\TODO{add something here about the uncertainty of distributions IRL because of the big lack of open-source production cache traces}
 
-\section{Research Question}\label{sec: research_q}
+The continuous increase in web traffic \cite{digital-global-report} necessitates further exploration of cache eviction algorithms to optimize web cache utilization. Concurrently, it has been observed that newer cache eviction algorithms exhibit increased complexity \cite{sieve, s3-fifo}. \citeauthor{sieve} highlight the importance of simplicity as a "key appealing feature for an algorithm to be deployed in production since it commonly correlates with effectiveness, maintainability, scalability, and low overhead" \cite{sieve}. Increased algorithm complexity introduces a host of issues, such as debugging difficulties, decreased efficiency, reduced throughput, scalability challenges due to greater per-object metadata requirements, and complexities in parameter tuning for newer machine learning-based algorithms.
+
+In addition to highlighting the increased complexity of recently developed algorithms, \citeauthor{sieve} introduce SIEVE, a novel cache eviction algorithm they claim "achieves both simplicity and efficiency" \cite{sieve}. More than just a typical cache eviction algorithm, SIEVE functions as a \keyword{turn-key cache primitive}: a basic, pre-built, and easy-to-use caching mechanism designed for minimal configuration and seamless integration into larger caching systems. Other cache-primitives that are widely used in today's cache systems include the well-known LRU and FIFO algorithms \cite{sieve, s3-fifo}.
+
+
+\section{Research Goal}\label{sec: research_q}
 
 \outline{Cache primitives, SIEVE vs LRU and FIFO, miss ratio}
 
-How do SIEVE compare to existing cache primitives? Is it competitive enough to be considered as a real competitor to widely used cache primitives LRU and FIFO?
+This research primarily aims to examine the effectiveness of \citeauthor{sieve}'s recent SIEVE turn-key cache primitive on workloads exhibiting Zipf-like distributions. We will compare its performance against the older cache primitives, LRU and FIFO. Additionally, we further assess the effectiveness of the different primitives across differences in parameters such as the Zipfian skewness parameter $\alpha$ and the relative cache size. Ultimately, this work seeks to determine whether SIEVE is sufficiently competitive to be considered a viable, or even preferred, alternative to LRU and FIFO in production systems exhibiting Zipf-like access patterns. Performance is evaluated using the miss ratio as the primary comparative metric, and web traces used in this work are generated synthetically by sampling from Zipfian distributions.
 
-How is the miss ratio of the different cache primitives?
 
-And how does cache size affect the effectiveness of different cache primitives?
+% How do SIEVE compare to existing cache primitives? Is it competitive enough to be considered as a real competitor to widely used cache primitives LRU and FIFO?
+
+% How is the miss ratio of the different cache primitives?
+
+% And how does cache size affect the effectiveness of different cache primitives?
 
 \section{Thesis Outline}
 
-\TODO{Outline of different chapters and briefly what topics are covered}
+This section provides a roadmap for the contents of this work. The first chapter, \nameref{chapter:introduction}, introduces the research topic and defines the problem statement and research goals. Following this, \nameref{chapter:background} establishes the theoretical foundation by reviewing key concepts such as web caching, cache eviction primitives, and Zipfian distributions. The methodology is then detailed across two chapters: \nameref{chapter:design}, which describes the implementation of the cache simulator, and \nameref{chapter:experimental-setup}, which outlines the specific parameters and process used for the simulations. The findings of these experiments are presented objectively in \nameref{chapter:results}, followed by a critical interpretation in \nameref{chapter:discussion}. Finally, \nameref{chapter:conclusion} summarizes the main contributions of the work and suggests clear directions for future research.

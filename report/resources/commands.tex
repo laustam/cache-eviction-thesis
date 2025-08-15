@@ -1,17 +1,28 @@
-\newcommand{\TODO}[1]{\todo[inline, color=purple!30]{#1}}
+\newboolean{showoutline}
+\setboolean{showoutline}{false}
 
-\newcommand{\reminder}[1]{\todo[inline, color=orange!30]{#1}}
+\newboolean{showtodos}
+\setboolean{showtodos}{false}
 
-% \newcommand{\outline}[1]{%
-%   \ifthenelse{\boolean{showoutline}}%
-%     {\textcolor{blue}{#1}}%
-%     {}%
-% }
 
-\newcommand{\outline}[1]{%
-  \ifthenelse{\boolean{showoutline}}%
-    {\vspace{1em}\noindent{\color{blue}\small{#1}}}%
+\newcommand{\TODO}[1]{
+  \ifthenelse{\boolean{showtodos}}
+    {\textsf{\todo[inline, color=purple!30]{#1}}}
+    {}
+}
+
+\newcounter{wan_counter}
+\newcommand{\WAN}[1]{
+    \stepcounter{wan_counter}
+    \todo[inline, color=orange!30]{\textsf{\textbf{Q\arabic{wan_counter}:} #1}}
+}
+
+\newcommand{\outline}[1]{
+  \ifthenelse{\boolean{showoutline}}
+    {\vspace{1em}\noindent{\textsf{\color{blue}\small{#1}}}}
     {}%
 }
 
 \newcommand{\code}[1]{\texttt{#1}}
+
+\newcommand{\keyword}[1]{\textsf{\textbf{#1}}}

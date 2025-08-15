@@ -1,4 +1,4 @@
-\documentclass[a4paper, 11pt]{report}
+\documentclass[a4paper, 10pt]{report}
 \usepackage{graphicx}
 \usepackage{xcolor} % colors
 \usepackage{lipsum}
@@ -7,6 +7,38 @@
 \usepackage{ifthen} % used to toggle commands on or off
 \usepackage{parskip}
 \usepackage{cite}
+\usepackage{enumitem} % controls format of descriptions, enumerate, etc.
+\usepackage{booktabs} % table tabs
+\usepackage{tabularx} % table width to prevent overflow
+\usepackage{appendix}
+\usepackage{float} % needed to use the H option for table alignment
+\usepackage{longtable}
+\usepackage{ltxtable} % This package combines longtable and tabularx functionality
+\usepackage[dvipsnames]{xcolor} % colors
+\usepackage[labelfont=bf, textfont=sf]{caption} % center captions and sf font
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{wrapfig} % wrap figures in text
+\usepackage{array} % used for left alignment in tables
+\usepackage{path}
+
+
+%%%%%%%%%%%%%%%%%% DRAFT - TO BE DELETED FOR FINAL
+\usepackage{eso-pic}
+\AtBeginDocument{%
+  \AddToShipoutPictureBG*{%
+    \AtTextUpperLeft{%
+      \put(\dimexpr0.3\paperwidth\relax,-0pt){\makebox[0pt][l]{\color[rgb]{0.8,0.8,0.8}\Huge DRAFT}}%
+    }
+  }
+}
+%%%%%%%%%%%%%%%%%%
+
+\setlist[description]{font=\sffamily\bfseries, style=unboxed, leftmargin=0cm}
+
+% bibliography stuff
+\usepackage[sortcites]{biblatex}
+\addbibresource{resources/references.bib}
 
 \usepackage{listings} % for code snippets
 
@@ -23,6 +55,7 @@
     % Removed options like caption and label to ensure none appear
 }
 
+\definecolor{lightgray}{gray}{0.95}
 \definecolor{mGreen}{rgb}{0,0.6,0}
 \definecolor{mGray}{rgb}{0.5,0.5,0.5}
 \definecolor{mPurple}{rgb}{0.58,0,0.82}
@@ -94,10 +127,6 @@
 \oddsidemargin 0.85cm
 \evensidemargin 0.37cm
 
-% Show outline --------------
-\newboolean{showoutline}
-\setboolean{showoutline}{true}  % Change to false to hide
-% ---------------------------
 
 \begin{document}
 \thispagestyle{empty}
@@ -112,7 +141,7 @@
 
 \rule{.9\linewidth}{.6pt}\\
 \vspace{0.4cm}
-{\huge \bfseries A Comparative Study of Cache Primitives Across Diverse \\ Workload Distributions \par}
+{\huge \bfseries A Comparative Study of Cache \\ Eviction Primitives On Synthetic Workloads With Zipf-like \\ Distributions \par}
 \vspace{0.4cm}
 \rule{.9\linewidth}{.6pt}\\[1.5cm]
 \vspace*{2mm}
@@ -146,25 +175,16 @@ of Science degree in Computer Science }
 
 \newpage\input{sections/abstract.tex}
 \tableofcontents
+\TODO{Where can I best link the code to my GitHub project?}
 
-% Testing citations ----------------------
-\TODO{\textbf{Testing citations}
-
-Sieve citation\cite{sieve}
-
-Web caching overview citation\cite{web-cache-overview}
-
-S3-FIFO citation\cite{s3-fifo}}
-
-
-% ----------------------------------------
-
-\newpage\input{report/sections/introduction.tex}
-\newpage\input{report/sections/background.tex}
-\newpage\input{report/sections/design.tex}
-\newpage\input{report/sections/results}
-\newpage\input{report/sections/evaluation.tex}
-\newpage\input{report/sections/conclusion.tex}
-\input{report/sections/references.tex}
+\include{report/sections/introduction.tex}
+\include{report/sections/background.tex}
+\include{report/sections/design.tex}
+\include{report/sections/experiment-setup}
+\include{report/sections/results}
+\include{report/sections/discussion}
+\include{report/sections/conclusion}
+\include{report/sections/appendix}
+\printbibliography
 
 \end{document}

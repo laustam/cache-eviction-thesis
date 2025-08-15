@@ -108,20 +108,239 @@ RESEARCH PAPERS
   bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
+@article{belady-ibm-1966,
+  author  = {Belady, L. A.},
+  title   = {A study of replacement algorithms for a virtual-storage computer},
+  journal = {IBM Systems Journal},
+  volume  = {5},
+  number  = {2},
+  pages   = {78-101},
+  year    = {1966}
+}
+
+@InProceedings{zipf-analysis,
+    author="Shi, Lei
+    and Gu, Zhimin
+    and Wei, Lin
+    and Shi, Yun",
+    editor="Pan, Yi
+    and Chen, Daoxu
+    and Guo, Minyi
+    and Cao, Jiannong
+    and Dongarra, Jack",
+    title="Quantitative Analysis of Zipf's Law on Web Cache",
+    booktitle="Parallel and Distributed Processing and Applications",
+    year="2005",
+    publisher="Springer Berlin Heidelberg",
+    address="Berlin, Heidelberg",
+    pages="845--852",
+    abstract="Many studies have shown that Zipf's law governs many features of the WWW and can be used to describe the popularity of the Web objects. Based upon Zipf's law, we analyze quantitatively the relationship between the hit ratio and the size of Web cache, present approximate formulae to calculate the size of Web cache when the hit ratio is given under the condition of basic Zipf's law and Zipf-like law, determine the critical value n in the top-n prefetching algorithm by studying the effect of parameter $\alpha$ on the hot Web documents. Zipf's law plays an important role in solving the Internet latency, and holds the promise of more effective design and use of Web cache resources.",
+    isbn="978-3-540-32100-2"
+}
+
+@inproceedings{youtube-traffic,
+    author = {Gill, Phillipa and Arlitt, Martin and Li, Zongpeng and Mahanti, Anirban},
+    title = {Youtube traffic characterization: a view from the edge},
+    year = {2007},
+    isbn = {9781595939081},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/1298306.1298310},
+    doi = {10.1145/1298306.1298310},
+    abstract = {This paper presents a traffic characterization study of the popular video sharing service, YouTube. Over a three month period we observed almost 25 million transactions between users on an edge network and YouTube, including more than 600,000 video downloads. We also monitored the globally popular videos over this period of time.In the paper we examine usage patterns, file properties, popularity and referencing characteristics, and transfer behaviors of YouTube, and compare them to traditional Web and media streaming workload characteristics. We conclude the paper with a discussion of the implications of the observed characteristics. For example, we find that as with the traditional Web, caching could improve the end user experience, reduce network bandwidth consumption, and reduce the load on YouTube's core server infrastructure. Unlike traditional Web caching, Web 2.0 provides additional meta-data that should be exploited to improve the effectiveness of strategies like caching.},
+    booktitle = {Proceedings of the 7th ACM SIGCOMM Conference on Internet Measurement},
+    pages = {15–28},
+    numpages = {14},
+    keywords = {youtube, web 2.0, multimedia, characterization},
+    location = {San Diego, California, USA},
+    series = {IMC '07}
+}
+
+@inproceedings{stretched-exponential,
+    author = {Guo, Lei and Tan, Enhua and Chen, Songqing and Xiao, Zhen and Zhang, Xiaodong},
+    title = {The stretched exponential distribution of internet media access patterns},
+    year = {2008},
+    isbn = {9781595939890},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/1400751.1400789},
+    doi = {10.1145/1400751.1400789},
+    abstract = {The commonly agreed Zipf-like access pattern of Web workloads is mainly based on Internet measurements when text-based content dominated the Web traffic. However, with dramatic increase of media traffic on the Internet, the inconsistency between the access patterns of media objects and the Zipf model has been observed in a number of studies. An insightful understanding of media access patterns is essential to guide Internet system design and management, including resource provisioning and performance optimizations.In this paper, we have studied a large variety of media workloads collected from both client and server sides in different media systems with different delivery methods. Through extensive analysis and modeling, we find: (1) the object reference ranks of all these workloads follow the stretched exponential (SE) distribution despite their different media systems and delivery methods; (2) one parameter of this distribution well characterizes the media file sizes, the other well characterizes the aging of media accesses; (3) some biased measurements may lead to Zipf-like observations on media access patterns; and (4) the deviation of media access pattern from the Zipf model in these workloads increases along with the workload duration.We have further analyzed the effectiveness of media caching with a mathematical model. Compared with Web caching under the Zipf model, media caching under the SE model is far less effective unless the cache size is enormously large. This indicates that many previous studies based on a Zipf-like assumption have potentially overestimated the media caching benefit, while an effective media caching system must be able to scale its storage size to accommodate the increase of media content over a long time. Our study provides an analytical basis for applying a P2P model rather than a client-server model to build large scale Internet media delivery systems.},
+    booktitle = {Proceedings of the Twenty-Seventh ACM Symposium on Principles of Distributed Computing},
+    pages = {283–294},
+    numpages = {12},
+    keywords = {modeling, multimedia, traffic analysis},
+    location = {Toronto, Canada},
+    series = {PODC '08}
+}
+
+@ARTICLE{eval-storage-hierarchies,
+  author={Mattson, R.L. and Gecsei, J. and Slutz, D. R. and Traiger, I. L.},
+  journal={IBM Systems Journal}, 
+  title={Evaluation techniques for storage hierarchies}, 
+  year={1970},
+  volume={9},
+  number={2},
+  pages={78-117},
+  keywords={},
+  doi={10.1147/sj.92.0078}}
+
+@ARTICLE{virtual-storage-study,
+  author={Belady, L. A.},
+  journal={IBM Systems Journal}, 
+  title={A study of replacement algorithms for a virtual-storage computer}, 
+  year={1966},
+  volume={5},
+  number={2},
+  pages={78-101},
+  keywords={},
+  doi={10.1147/sj.52.0078}}
+
+@article{lru-better-than-fifo,
+    title={LRU Is Better than FIFO},
+    author={M. Chrobak and J. Noga},
+    journal={Algorithmica},
+    year={1999},
+    volume={23},
+    pages={180-185},
+    doi={10.1007/PL00009255}
+}
+
+@article{lock-free-fifo,
+    title={An optimistic approach to lock-free FIFO queues},
+    author={Edya Ladan-Mozes and N. Shavit},
+    journal={Distributed Computing},
+    year={2004},
+    volume={20},
+    pages={323-341},
+    doi={10.1007/s00446-007-0050-0}
+}
+
+
 #######################################################################################
-C STUFF
+ALGORITHMS
 
-@online{llvm_diagnostics,
-  author = {{LLVM Project}},
-  title = {{Clang Compiler User's Manual}},
-  howpublished = {\url{https://clang.llvm.org/docs/UsersManual.html#diagnostics}},
-  year = {2025}
+@inproceedings {alg-arc,
+    author = {Nimrod Megiddo and Dharmendra S. Modha},
+    title = {{ARC}: A {Self-Tuning}, Low Overhead Replacement Cache},
+    booktitle = {2nd USENIX Conference on File and Storage Technologies (FAST 03)},
+    year = {2003},
+    address = {San Francisco, CA},
+    url = {https://www.usenix.org/conference/fast-03/arc-self-tuning-low-overhead-replacement-cache},
+    publisher = {USENIX Association},
+    month = mar
 }
 
-@online{cppreference_inttypes,
-  author = {{cppreference.com}},
-  title = {{Fixed width integer types (since C99)}},
-  howpublished = {\url{https://en.cppreference.com/w/c/types/integer}},
-  note = {Accessed: 2025-06-02}
+@inproceedings{alg-ss-lru,
+    author = {Li, Chunhua and Wu, Man and Liu, Yuhan and Zhou, Ke and Zhang, Ji and Sun, Yunqing},
+    title = {SS-LRU: a smart segmented LRU caching},
+    year = {2022},
+    isbn = {9781450391429},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3489517.3530469},
+    doi = {10.1145/3489517.3530469},
+    booktitle = {Proceedings of the 59th ACM/IEEE Design Automation Conference},
+    pages = {397–402},
+    numpages = {6},
+    keywords = {cache replacement, cost-sensitive, machine learning, smart},
+    location = {San Francisco, California},
+    series = {DAC '22}
 }
 
+@inproceedings{alg-2q,
+    author = {Johnson, Theodore and Shasha, Dennis},
+    title = {2Q: A Low Overhead High Performance Buffer Management Replacement Algorithm},
+    year = {1994},
+    isbn = {1558601538},
+    publisher = {Morgan Kaufmann Publishers Inc.},
+    address = {San Francisco, CA, USA},
+    booktitle = {Proceedings of the 20th International Conference on Very Large Data Bases},
+    pages = {439–450},
+    numpages = {12},
+    series = {VLDB '94}
+}
+
+@inproceedings {alg-mq,
+    author = {Yuanyuan Zhou and James Philbin and Kai Li},
+    title = {The {Multi-Queue} Replacement Algorithm for Second Level Buffer Caches},
+    booktitle = {2001 USENIX Annual Technical Conference (USENIX ATC 01)},
+    year = {2001},
+    address = {Boston, MA},
+    url = {https://www.usenix.org/conference/2001-usenix-annual-technical-conference/multi-queue-replacement-algorithm-second-level},
+    publisher = {USENIX Association},
+    month = jun
+}
+
+@inproceedings{alg-lhd,
+    author = {Beckmann, Nathan and Chen, Haoxian and Cidon, Asaf},
+    title = {LHD: improving cache hit rate by maximizing hit density},
+    year = {2018},
+    isbn = {9781931971430},
+    publisher = {USENIX Association},
+    address = {USA},
+    booktitle = {Proceedings of the 15th USENIX Conference on Networked Systems Design and Implementation},
+    pages = {389–403},
+    numpages = {15},
+    location = {Renton, WA, USA},
+    series = {NSDI'18}
+}
+
+@inproceedings {alg-cacheus,
+    author = {Liana V. Rodriguez and Farzana Yusuf and Steven Lyons and Eysler Paz and Raju Rangaswami and Jason Liu and Ming Zhao and Giri Narasimhan},
+    title = {Learning Cache Replacement with {CACHEUS}},
+    booktitle = {19th USENIX Conference on File and Storage Technologies (FAST 21)},
+    year = {2021},
+    isbn = {978-1-939133-20-5},
+    pages = {341--354},
+    url = {https://www.usenix.org/conference/fast21/presentation/rodriguez},
+    publisher = {USENIX Association},
+    month = feb
+}
+
+@inproceedings {alg-lrb,
+    author = {Zhenyu Song and Daniel S. Berger and Kai Li and Wyatt Lloyd},
+    title = {Learning Relaxed Belady for Content Distribution Network Caching },
+    booktitle = {17th USENIX Symposium on Networked Systems Design and Implementation (NSDI 20)},
+    year = {2020},
+    isbn = {978-1-939133-13-7},
+    address = {Santa Clara, CA},
+    pages = {529--544},
+    url = {https://www.usenix.org/conference/nsdi20/presentation/song},
+    publisher = {USENIX Association},
+    month = feb
+}
+
+@inproceedings {alg-gl-cache,
+    author = {Juncheng Yang and Ziming Mao and Yao Yue and K. V. Rashmi},
+    title = {{GL-Cache}: Group-level learning for efficient and high-performance caching},
+    booktitle = {21st USENIX Conference on File and Storage Technologies (FAST 23)},
+    year = {2023},
+    isbn = {978-1-939133-32-8},
+    address = {Santa Clara, CA},
+    pages = {115--134},
+    url = {https://www.usenix.org/conference/fast23/presentation/yang-juncheng},
+    publisher = {USENIX Association},
+    month = feb
+}
+
+#######################################################################################
+OTHER RESOURCES
+
+@misc{latency-caching,
+    author = {Olumide, Mike},
+    year = {2024},
+    month = {07},
+    title = {Reducing Latency with Caching: An In-Depth Analysis of Effective Caching Strategies for Modern Web Applications},
+    howpublished ={\url{https://www.researchgate.net/publication/385737667_reducing_latency_with_caching_an_in-depth_analysis_of_effective_caching_strategies_for_modern_web_applications}},
+    note         = {Accessed: 5 June 2025}
+}
+
+@misc{digital-global-report,
+    author       = {We Are Social and Meltwater},
+    title        = {Digital 2024 Global Overview Report},
+    year         = {2024},
+    publisher    = {DataReportal},
+    howpublished = {\url{https://datareportal.com/reports/digital-2024-global-overview-report}},
+    note         = {Accessed: 29 July 2025}
+}
