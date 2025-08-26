@@ -16,8 +16,6 @@ cache_t *myFIFO_init(const common_cache_params_t ccache_params, const char *cach
     cache->remove = myFIFO_remove;
     cache->to_evict = myFIFO_to_evict;
     cache->eviction_params = params;
-    // cache->obj_md_size = 0; // TODO: is this correct? shouldn't this be
-    // sizeof myFIFO_params_t?
 
     return cache;
 }

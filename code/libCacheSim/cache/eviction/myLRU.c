@@ -16,7 +16,6 @@ cache_t *myLRU_init(const common_cache_params_t ccache_params, const char *cache
     cache->remove = myLRU_remove;
     cache->to_evict = myLRU_to_evict;
     cache->eviction_params = params;
-    cache->obj_md_size = ccache_params.consider_obj_metadata ? 8 * 2 : 0; // TODO: is this correct? shouldn't this be sizeof myLRU_params_t?
 
     return cache;
 }

@@ -18,7 +18,6 @@ cache_t *mySIEVE_init(const common_cache_params_t ccache_params, const char *cac
     cache->remove = mySIEVE_remove;
     cache->to_evict = mySIEVE_to_evict;
     cache->eviction_params = params;
-    cache->obj_md_size = ccache_params.consider_obj_metadata; // TODO: is this correct? shouldn't this be sizeof mySIEVE_params_t?
 
     return cache;
 }
