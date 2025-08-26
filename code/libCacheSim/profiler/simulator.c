@@ -289,6 +289,7 @@ cache_stat_t *simulate_with_multi_caches(
   // start computation
   for (i = 1; i < num_of_caches + 1; i++) {
     result[i - 1].cache_size = caches[i - 1]->cache_size;
+    result[i - 1].rel_cache_size = caches[i - 1]->rel_cache_size;
 
     ASSERT_TRUE(g_thread_pool_push(gthread_pool, GSIZE_TO_POINTER(i), NULL),
                 "cannot push data into thread_pool in get_miss_ratio\n");

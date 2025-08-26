@@ -241,6 +241,7 @@ static void init_arg(struct arguments *args) {
 
   for (int i = 0; i < N_MAX_CACHE_SIZE; i++) {
     args->cache_sizes[i] = 0;
+    args->rel_cache_sizes[i] = 0;
   }
   args->n_cache_size = 0;
 }
@@ -346,7 +347,7 @@ void parse_cmd(int argc, char *argv[], struct arguments *args) {
     for (int j = 0; j < args->n_cache_size; j++) {
       int idx = i * args->n_cache_size + j;
       args->caches[idx] = create_cache(
-          args->trace_path, args->eviction_algo[i], args->cache_sizes[j],
+          args->trace_path, args->eviction_algo[i], args->cache_sizes[j], args->rel_cache_sizes[j],
           args->eviction_params, args->consider_obj_metadata);
 
       if (args->admission_algo != NULL) {
@@ -448,9 +449,11 @@ static int conv_cache_sizes(char *cache_size_str, struct arguments *args) {
         cal_working_set_size(args->reader, &wss_obj, &wss_byte);
         wss = args->ignore_obj_size ? wss_obj : wss_byte;
       }
-      args->cache_sizes[args->n_cache_size++] = (uint64_t)(wss * atof(token));
+      args->cache_sizes[args->n_cache_size] = (uint64_t)(wss * atof(token));
+      args->rel_cache_sizes[args->n_cache_size] = (float)atof(token);
+      args->n_cache_size += 1;
     } else {
-      args->cache_sizes[args->n_cache_size++] = conv_size_str_to_byte_ul(token);
+        args->cache_sizes[args->n_cache_size++] = conv_size_str_to_byte_ul(token);
     }
 
     token = strtok(NULL, ",");

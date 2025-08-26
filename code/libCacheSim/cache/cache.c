@@ -37,6 +37,7 @@ cache_t *cache_struct_init(const char *const cache_name,
     cache->init_params[CACHE_INIT_PARAMS_LEN - 1] = '\0';
   }
   cache->cache_size = params.cache_size;
+  cache->rel_cache_size = params.rel_cache_size;
   cache->eviction_params = NULL;
   cache->admissioner = NULL;
   cache->prefetcher = NULL;

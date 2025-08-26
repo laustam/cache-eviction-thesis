@@ -15,10 +15,11 @@
 extern "C" {
 #endif
 
-static inline cache_t *create_cache(const char *trace_path, const char *eviction_algo, const uint64_t cache_size,
+static inline cache_t *create_cache(const char *trace_path, const char *eviction_algo, const uint64_t cache_size, const float rel_cache_size,
                                     const char *eviction_params, const bool consider_obj_metadata) {
   common_cache_params_t cc_params = {
     .cache_size = cache_size,
+    .rel_cache_size = rel_cache_size,
     .default_ttl = 86400 * 300,
     .hashpower = 24,
     .consider_obj_metadata = consider_obj_metadata,
@@ -49,8 +50,8 @@ static inline cache_t *create_cache(const char *trace_path, const char *eviction
   if (init_func) {
     cache = init_func(cc_params, eviction_params);
   } else {
-    ERROR("do not support algorithm %s\n", eviction_algo);
-    abort();
+      ERROR("do not support algorithm %s\n", eviction_algo);
+      abort();
   }
 
   return cache;

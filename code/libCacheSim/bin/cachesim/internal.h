@@ -27,6 +27,7 @@ struct arguments {
   char *admission_algo;
   char *prefetch_algo;
   uint64_t cache_sizes[N_MAX_CACHE_SIZE];
+  float rel_cache_sizes[N_MAX_CACHE_SIZE];
   int n_cache_size;
   int warmup_sec;
 
