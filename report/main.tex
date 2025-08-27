@@ -21,18 +21,7 @@
 \usepackage{wrapfig} % wrap figures in text
 \usepackage{array} % used for left alignment in tables
 \usepackage{path}
-
-
-%%%%%%%%%%%%%%%%%% DRAFT - TO BE DELETED FOR FINAL
-\usepackage{eso-pic}
-\AtBeginDocument{%
-  \AddToShipoutPictureBG*{%
-    \AtTextUpperLeft{%
-      \put(\dimexpr0.3\paperwidth\relax,-0pt){\makebox[0pt][l]{\color[rgb]{0.8,0.8,0.8}\Huge DRAFT}}%
-    }
-  }
-}
-%%%%%%%%%%%%%%%%%%
+\usepackage{subcaption}
 
 \setlist[description]{font=\sffamily\bfseries, style=unboxed, leftmargin=0cm}
 
@@ -175,7 +164,6 @@ of Science degree in Computer Science }
 
 \newpage\input{sections/abstract.tex}
 \tableofcontents
-\TODO{Where can I best link the code to my GitHub project?}
 
 \include{report/sections/introduction.tex}
 \include{report/sections/background.tex}

@@ -1,52 +1,52 @@
 \chapter{Background}\label{chapter:background}
 
-This chapter briefly explores the background of the field of caching as a whole, followed by a short discussion on important differences in caching systems. These differences are essential in guiding decisions for an adequate choice of system-dependent eviction algorithm. Next, web caching, which is the focus of this work, is explored, as well as cache eviction algorithms applicable to web systems in which these operate. Lastly, we touch upon common metrics used to benchmark the performance of different cache policies and discuss the current trends observed in web traffic.
+This chapter provides a brief overview of the field of caching as a whole, followed by a concise discussion of the key differences between caching systems. These differences are essential in guiding decisions for an adequate choice of system-dependent eviction algorithm. Next, web caching, the focus of this work, is explored, along with cache eviction algorithms applicable to web systems in which it operates. Lastly, we discuss common metrics used to benchmark the performance of different cache policies and examine the current trends observed in web traffic.
 
-\section{Brief History of Traditional Caches}
+\section{Brief History of Traditional Memory Caches}
 
-Traditional cache systems are a fundamental component of modern computing architectures, designed to bridge the persistent and growing performance gap between fast processors and slower main memory or storage devices \cite{belady-ibm-1966}. This concept of caching emerged with the advent of early computing systems, though pinpointing the exact date that caches were invented is debatable; the foundational ideas behind caching were explored as early as the 1960s. The need for a small, fast memory layer to store frequently accessed data to reduce data access times and improve system throughput was well recognized and quickly understood \cite{belady-ibm-1966}.
+Traditional memory cache systems are a fundamental component of modern computing architectures, designed to bridge the persistent and growing performance gap between fast processors and slower main memory or storage devices \cite{belady-ibm-1966}. This concept of caching emerged with the advent of early computing systems. The foundational ideas behind caching were explored as early as the 1960s; however, pinpointing the exact date that caches were invented is somewhat debatable. The need for a small, fast memory layer to store frequently accessed data and reduce data access times, thereby improving system throughput, was well recognized and quickly understood \cite{belady-ibm-1966}.
 
 % Cache systems have been around for a while. \textbf{When was the first cache introduced? Why was it needed? What problem did it solve?}
 
-\section{Traditional Caches vs. Web Caches}
+\section{Traditional Memory Caches vs. Web Caches}
 
 \outline{Traditional vs web cache (access patterns, variability in size, ...)}
 
-While the fundamental principle of caching, of storing frequently accessed data in a faster, smaller memory, remains consistent, there are significant distinctions between traditional hardware-managed caches (i.e., CPU caches or disk caches) and modern web caches. These differences stem primarily from the different environments in which they operate and the data they handle, subject to different characteristics and access patterns.
+While the fundamental principle of caching — storing frequently accessed data in a faster and smaller memory — remains consistent, there are significant distinctions between traditional hardware-managed caches (i.e., CPU caches or disk caches) and modern web caches. These differences stem primarily from the different environments in which they operate and the data they handle, which are subject to distinct characteristics and access patterns.
 
-\citeauthor{web-cache-overview} motivate that "caching policies for traditional memory systems do not necessarily perform well when applied to WWW traffic" by highlighting a number of differences between memory systems and web systems \cite{web-cache-overview}.
+\citeauthor{web-cache-overview} \cite{web-cache-overview} motivate that "caching policies for traditional memory systems do not necessarily perform well when applied to WWW traffic" by highlighting several differences between memory systems and web systems.
 
 \begin{description}
-    \item[Item size] While memory systems mostly deal with fixed-size pages, web cache items are of variable size. This difference underscores the need for size-aware eviction algorithms in web cache systems, where items are not sized homogeneously.
-    \item[Cost of retrieving missed items] Web systems are highly distributed across multiple geographical locations, such that the cost of retrieving a missed item is dependent on several factors, such as the distance between proxy and original servers, document size, and the bandwidth between the proxy and original servers. On the contrary, traditional memory systems have no such dependence.
+    \item[Item size] While memory systems mostly deal with fixed-size pages, web cache items are of variable size. This difference highlights the need for size-aware eviction algorithms in web cache systems, where items are not uniformly sized.
+    \item[Cost of retrieving missed items] Web systems are highly distributed across multiple geographical locations, so that the cost of retrieving a missed item is dependent on several factors, such as the distance between proxy and original servers, document size, and the bandwidth between the proxy and original servers. On the contrary, traditional memory systems have no such dependence.
     \item[Item expiration] Cache items in memory systems generally have no expiration. However, updates to web documents are frequent, making expiration of cache items an important consideration for web cache systems.
     \item[Popularity of items (access patterns)] Access patterns in web traffic seem to generally follow a Zipf-like distribution. In the meantime, no such trend is observed for memory systems.
 \end{description}
 
-These inherent differences underline the importance of employing different cache eviction algorithms for traditional memory and web systems, allowing each to leverage the unique trends and characteristics specific to the system.
+These inherent differences underscore the importance of employing distinct cache eviction algorithms for traditional memory and web systems, enabling each to capitalize on the unique trends and characteristics specific to its system.
 
 \section{Web Caching}
 
 \outline{Goal of Web Caching?}
 
-Web caching has a clear goal: to reduce the latency of frequently accessed items. In fact, caching is considered one of the most effective strategies in minimizing latency. Rather than repeatedly re-fetching or recomputing the same data from a single data server, a cache stores copies of the data in memory or locations closer to the user \cite{latency-caching, web-cache-performance}. Nevertheless, an effective caching architecture consists not of a single caching mechanism but instead of multiple layers targeting various scenarios.
+Web caching has a clear goal: to reduce the latency of frequently accessed items. In fact, caching is considered one of the most effective strategies in minimizing latency. Rather than repeatedly re-fetching or recomputing the same data from a single data server, a cache stores copies of the data in memory or locations closer to the user \cite{latency-caching, web-cache-performance}. Nevertheless, an effective caching architecture consists of multiple layers targeting various scenarios, rather than a single caching mechanism.
 
 \outline{Different types of web caches (browser cache, proxy cache, reverse proxy, CDN cache ...)}
 
 \TODO{might want more citations for the latency stuff?
 }
 
-\citeauthor{latency-caching} presents three primary levels at which caching can be implemented: client-side, server-side, and edge. While each of these serves different needs, the combination of all three can achieve effective caching solutions for large-scale web systems \cite{latency-caching}. An overview of the key differences in each of these layers is outlined below.
+\citeauthor{latency-caching} \cite{latency-caching} presents three primary levels at which caching can be implemented: client-side, server-side, and edge. The authors believe that, while each of these layers serves different needs, the combination of all three can achieve effective caching solutions for large-scale web systems. An overview of the key differences in each of these layers is outlined below.
 
 \begin{description}
     \item[1. Client-side caching] This caching level stores data directly at the end-user's side: in the browser or on their local device. Here, we refer to the caching of static assets such as images, JavaScript, or CSS files. Storing this static data locally reduces the number of outbound requests that the client must make to a remote server. Additionally, local storage and session storage are leveraged to store data persistently or temporarily. Content that is dynamic or personalized is not ideal for client-side caching due to its frequently changing nature, and with it, the need to invalidate out-of-date local copies.
     \item[2. Server-side caching] The server-side caching layer focuses on improving application proximity internally to reduce server load. This entails storing dynamic content, such as HTML, database query results, or API responses, in memory or on disk. The most common form of this kind of caching is object caching, where data is stored in memory, with prominent examples in production systems being the popular Memcached or Redis. 
-    \item[3. Edge caching] Unlike the server-side caching strategy, edge caching emphasizes reducing the geographical proximity of frequently accessed data to the client rather than internally. Typically, this is implemented using Content Delivery Networks (CDNs) to distribute cached assets across multiple servers around the world. In this way, when a user requests a resource, the CDN servers determine the closest edge server from which to deliver the resource. This makes edge caching a great solution for applications with a globally distributed user base, especially for static content.
+    \item[3. Edge caching] Unlike the server-side caching strategy, edge caching emphasizes reducing the geographical proximity of frequently accessed data to the client rather than internally. Typically, this is implemented using Content Delivery Networks (CDNs) to distribute cached assets across multiple servers worldwide. In this way, when a user requests a resource, the CDN servers determine the closest edge server from which to deliver the resource. This makes edge caching a great solution for applications with a globally distributed user base, especially for static content.
 \end{description}
 
 Despite differences in use cases and targeting different aspects of reducing network latency, all caching layers described above share a common challenge: cache consistency and invalidation. Ensuring that the cached version of a data item is up-to-date and unchanged is crucial to effectively tackling the goal of latency reduction.
 
-This work recognizes the importance of the ever-changing nature of data on the web, and consequently, within deployed web caches. However, this paper does not investigate how best to tackle issues related to this key characteristic of web traffic; instead, each item in the cache is treated as unchanging. This highlights a limitation of this work regarding direct applicability to highly dynamic production environments. Nevertheless, this does not diminish the importance of studying the performance of algorithms on specific, well-defined workload distributions.
+This work recognizes the importance of the ever-changing nature of data on the web, and consequently, within deployed web caches. However, this paper does not investigate how best to tackle issues related to this key characteristic of web traffic; instead, each item in the cache is considered to have no expiration. This highlights a limitation of this work regarding direct applicability to highly dynamic production environments. Nevertheless, this does not diminish the importance of studying the performance of algorithms on specific, well-defined workload distributions.
 
 % \outline{Different use cases! (cite sieve paper)}
 
@@ -54,14 +54,14 @@ This work recognizes the importance of the ever-changing nature of data on the w
 
 \outline{Different eviction algorithms (deterministic vs randomized)}
 
-Many different types of cache eviction algorithms exist. \citeauthor{web-cache-overview} classify cache eviction policies into two main groups: \keyword{deterministic} and \keyword{randomized}. Deterministic algorithms guarantee consistent behavior of eviction victims across multiple runs. Their randomized counterparts do not promise this kind of consistency, and instead use randomness in the selection criteria to reduce running-time complexity\cite{web-cache-overview}. It is important to note that this work makes comparisons only between deterministic algorithms, to ensure reproducibility and avoid random noise in the gathered results.
+Many different types of cache eviction algorithms exist. \citeauthor{web-cache-overview} \cite{web-cache-overview} classify cache eviction policies into two main groups: \keyword{deterministic} and \keyword{randomized}. Deterministic algorithms guarantee consistent behavior of eviction victims across multiple runs. Their randomized counterparts do not promise this kind of consistency; instead, they use randomness in the selection criteria to reduce the running-time complexity. It is essential to note that this work makes comparisons only between deterministic algorithms, ensuring reproducibility and minimizing random noise in the gathered results.
 
 
 \outline{newly emerging algorithms using AI and shit, many overly complicated nowadays cite sieve}
 
-Classifying algorithms as either deterministic or randomized is valuable for theoretical comparison, but this distinction is not a practical metric for evaluating their suitability in real-world production environments. For real-world applications, a more valuable metric is the algorithm's \keyword{complexity}, in terms of its implementation effort, predictability, and performance overhead \cite{sieve, s3-fifo}. Cache eviction algorithms can take on varying levels of complexity, ranging from simple solutions to highly complex and sophisticated algorithms engineered for unique use cases. On the simpler end of the spectrum are foundational cache eviction primitives, which often serve as "building blocks" for more advanced strategies. These include methods like Least Recently Used (LRU), First-In, First-Out (FIFO), and SIEVE. A more advanced class of algorithms manages multiple LRU queues to make smarter eviction decisions. Examples of these include Adaptive Replacement Cache (ARC) \cite{alg-arc}, Segmented LRU (SLRU) \cite{alg-ss-lru}, Two-Queue (2Q) \cite{alg-2q}, and Multi-Queue (MQ) \cite{alg-mq}. At the highest level of complexity are modern, highly sophisticated algorithms that integrate machine learning techniques. These approaches, such as LHD \cite{alg-lhd}, CACHEUS \cite{alg-cacheus}, LRB \cite{alg-lrb}, and GL-Cache \cite{alg-gl-cache}, are designed to predict future access patterns and optimize performance with greater precision \cite{sieve}.
+Classifying algorithms as either deterministic or randomized is valuable for theoretical comparison, but this distinction is not a practical metric for evaluating their suitability in real-world production environments. For real-world applications, a more valuable metric is the algorithm's \keyword{complexity}, in terms of its implementation effort, predictability, and performance overhead \cite{sieve, s3-fifo}. Cache eviction algorithms can vary in complexity, ranging from simple solutions to highly complex and sophisticated algorithms tailored to specific use cases. On the simpler end of the spectrum are foundational cache eviction primitives, which often serve as "building blocks" for more advanced strategies. These include methods like Least Recently Used (LRU), First-In, First-Out (FIFO), and SIEVE. A more advanced class of algorithms manages multiple LRU queues to make smarter eviction decisions. Examples of these include Adaptive Replacement Cache (ARC) \cite{alg-arc}, Segmented LRU (SLRU) \cite{alg-ss-lru}, Two-Queue (2Q) \cite{alg-2q}, and Multi-Queue (MQ) \cite{alg-mq}. At the highest level of complexity are modern, highly sophisticated algorithms that integrate machine learning techniques. These approaches, such as LHD \cite{alg-lhd}, CACHEUS \cite{alg-cacheus}, LRB \cite{alg-lrb}, and GL-Cache \cite{alg-gl-cache}, are designed to predict future access patterns and optimize performance with greater precision \cite{sieve}.
 
-The focus of this work is on the comparison of cache eviction primitives, which lie on the simpler end of the complexity scale. These primitives are often interchangeable with one another in more complex policies. In fact, \citeauthor{sieve} investigated the effect of replacing LRU for the SIEVE cache primitive in more advanced algorithms, such as LeCaR, 2Q, and ARC, and found significant reductions in the average miss ratio \cite{sieve}. With this in mind, it is imperative to study these primitives on the lower complexity end to optimize the composition of more advanced policies for performance.
+The focus of this work is on comparing cache eviction primitives, which lie on the simpler end of the complexity scale. These primitives are often interchangeable with one another in more complex policies. In fact, \citeauthor{sieve} \cite{sieve} investigated the effect of replacing LRU for the SIEVE cache primitive in more advanced algorithms, such as LeCaR, 2Q, and ARC, and found significant reductions in the average miss ratio. With this in mind, it is imperative to study these primitives on the lower complexity end to optimize the composition of more advanced policies for performance.
 
 
 \section{Performance Metrics}
@@ -71,15 +71,16 @@ The focus of this work is on the comparison of cache eviction primitives, which 
 The performance of caches is measured on two primary scales: efficiency and throughput \cite{sieve}:
 
 \begin{description}
-    \item[Efficiency] is a measure of how well an algorithm stores relevant items. Common metrics to measure efficiency are the miss ratio of objects or bytes, where a lower miss ratio is preferable. That is, how many times an object or some number of bytes is requested but not present in the cache.
-    \item[Throughput] aims to measure performance on a time-based basis. Higher throughput allows the cache to serve data more quickly, and makes for a crucial component to achieving scalability of a cache system in a larger web context.
+    \item[Efficiency] is a measure of how well an algorithm stores relevant items. A standard measure of efficiency is the miss ratio, defined as the number of cache misses divided by the total number of cache requests. A cache miss occurs when a requested item is not found in the cache, whereas a cache hit signifies a successful retrieval of the item. This miss ratio can be calculated in terms of number of objects of bytes.
+    
+    \item[Throughput] refers to the rate of data that is processed, and aims to measure performance on a time-based basis. Higher throughput enables the cache to serve data more quickly, making it a crucial component in achieving scalability for a cache system in a larger web context.
 \end{description}
 
-The optimization of both efficiency and throughput of a cache architecture are both crucial in building a highly performant system. Both metrics are highly dependent on the eviction algorithm dictating a cache's choice for item eviction. This paper hones in on the optimization of the efficiency aspect of performance, and more specifically, on optimizing for the object miss ratio, which in our case is equivalent to the byte miss ratio since each object is a single byte in size.
+The optimization of both efficiency and throughput of a cache architecture is crucial in building a highly performant system. Both metrics are highly dependent on the eviction algorithm dictating a cache's choice for item eviction. This paper focuses on optimizing the efficiency aspect of performance, and more specifically, on minimizing the miss ratio. Notably, the object and byte miss ratios are equivalent in this work since each object is a single byte in size.
 
 \section{Web Traffic}
 
-The optimization of web cache performance is a clear-cut goal, but is, in practice, difficult to achieve. This is largely due to the unpredictable and highly variable nature of web traffic, which a good cache eviction policy must be designed to leverage.
+The optimization of web cache performance is a clear-cut goal, but is, in practice, difficult to achieve. This is mainly due to the unpredictable and highly variable nature of web traffic, for which a good cache eviction policy must be designed to leverage.
 
 \TODO{add more sources here!}
 
@@ -87,13 +88,13 @@ Additionally, a significant challenge for academic research in web caching is th
 
 \subsection{Zipfian Distributions}\label{bkg: zipfian-distributions}
 
-A widely observed characteristic of web traffic is its adherence to a Zipf-like distribution \cite{sieve, web-cache-overview, s3-fifo, internet-zipf, zipf-analysis}, where a small subset of all objects accounts for the majority of requests that are made. More specifically, the relationship follows a \keyword{rank-frequency inverse power law}, where the relative frequency of an item with rank $i$ is inversely proportional to its rank raised to the power of $\alpha$, given by the formula \(f(i)\propto{1}/{i^\alpha}\). An item with a lower rank is thus more likely to be requested multiple times, while an item with a higher rank is requested less frequently. 
+A widely observed characteristic of web traffic is its adherence to a Zipf-like distribution \cite{sieve, web-cache-overview, s3-fifo, internet-zipf, zipf-analysis}, where a small subset of all objects accounts for the majority of requests that are made. More specifically, the relationship follows a \keyword{rank-frequency inverse power law}, where the relative frequency of an item with rank $i$ is inversely proportional to its rank raised to the power of $\alpha$, given by the formula \(f(i)\propto{1}/{i^\alpha}\). An item with a lower rank is thus more likely to be requested multiple times, while an item with a higher rank is asked for less frequently. 
 
-\outline{talk about how nobody really knows about the right alpha value and that it kinda depends on different things}
+\outline{talk about how nobody really knows about the correct alpha value and that it kinda depends on different things}
 
-A crucial parameter to account for differences in Zipfian distributions is the skewness parameter $\alpha$. Previous works have found varying values for $\alpha$ \cite{twitter-analysis, youtube-traffic, sieve}, with the implication that its value is dependent on a multitude of factors. \citeauthor{sieve} suggest that the reasons for the large range of observed $\alpha$ values depend on (1) the type of workload, (2) the cache layer, and (3) the popularity of the service \cite{sieve}. The synthetic workloads generated in this work use a range of $\alpha$ values to account for the variability observed in previous research.
+A crucial parameter to account for differences in Zipfian distributions is the skewness parameter $\alpha$. Previous works \cite{twitter-analysis, youtube-traffic, sieve} have found varying values for $\alpha$, suggesting that its value is dependent on a multitude of factors. \citeauthor{sieve} \cite{sieve} indicate that the reasons for the extensive range of observed $\alpha$ values depend on (1) the type of workload, (2) the cache layer, and (3) the popularity of the service. The synthetic workloads generated in this work use a range of $\alpha$ values to account for the variability observed in previous research.
 
-It is important to note that, though this Zipf-like behavior has been documented numerous times, there remains skepticism regarding whether it is the most appropriate access pattern of Web workloads. In fact, research finds that some media traffic follows a stretched exponential distribution instead \cite{stretched-exponential, internet-zipf}. This uncertainty regarding Web traffic access patterns further highlights the need for web traces to be more openly available for more conclusive research.
+It is essential to note that, although this Zipf-like behavior has been documented numerous times, skepticism remains regarding whether it is the most appropriate access pattern for web workloads. In fact, research finds that some media traffic follows a stretched exponential distribution instead \cite{stretched-exponential, internet-zipf}. This uncertainty regarding web traffic access patterns in some traces that were analysed further highlights the need for web traces to be more openly available for more conclusive research. Nevertheless, the large number of research finding Zipf-like patterns in web workloads makes it relevant to study cache efficiency for these kinds of distributions.
 
 
 % we want our algs to take advantage of these! but how can we do that if we dont know waaa! we think its mostly zipf but theres also some people saying for example the stretched exponent thing... we are lacking production traces for a good answer though!
@@ -106,11 +107,3 @@ It is important to note that, though this Zipf-like behavior has been documented
 
 % zipf alpha value is different in different use cases, this work looks at effect of zipf parameter on performance of the different algs
 
-
-
-
-
-
-% \section{Related work}
-
-% ???
